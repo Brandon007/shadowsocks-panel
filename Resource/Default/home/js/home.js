@@ -18,7 +18,7 @@ var bgm = $("#bgmusic")[0];
 
 bgm.volume = .1;
 
-var BASEDIR = "/Resource/Default/home/images/", IMGNUM = 20;
+var BASEDIR = "/Resource/Default/home/images/", IMGNUM = 17;
 
 var imgs = [], rds = Math.random(), rgImg;
 
