@@ -223,6 +223,31 @@
                     'option_k': "这里必填啊喂",
                     'option_v': "这里也要填啊喂"
                 },  
+                errorElement: 'span',
+                errorClass: 'validate-has-error',
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('validate-has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('validate-has-error');
+                },
+                errorPlacement: function (error, element)
+                {
+                    if(element.closest('.has-switch').length)
+                    {
+                        error.insertAfter(element.closest('.has-switch'));
+                    }
+                    else {
+                        if(element.parent('.checkbox, .radio').length || element.parent('.input-group').length)
+                        {
+                            error.insertAfter(element.parent());
+                        }
+                        else
+                        {
+                            error.insertAfter(element);
+                        }
+                    }
+                },                
                 submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
