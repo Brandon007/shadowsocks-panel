@@ -221,38 +221,39 @@
                 });
             }
         });
-        $("#node-add").on('click', function(){
+        $("#option-add").on('click', function(){
+            reset(true);
             $('#modal-add').modal('show', {backdrop: 'static'});
-        $("form#form1").validate({
-            rules: {
-                'option_k': "required",
-                'option_v': "required"
-            },
-            messages: {
-                'option_k': "这里必填啊喂",
-                'option.v': "这里也要填啊喂"
-            },  
-            submitHandler: function(form) {
-                $.ajax({
-                    url: form.action,
-                    method: "POST",
-                    dataType: "json",
-                    data: $(form_add).serialize(),
-                    success: function(result){
-                        if(result.code != 200) {
-                            showToastr(result.message, 0, 3000, '系统错误');
-                            return;
+            $("form#form1").validate({
+                rules: {
+                    'option_k': "required",
+                    'option_v': "required"
+                },
+                messages: {
+                    'option_k': "这里必填啊喂",
+                    'option.v': "这里也要填啊喂"
+                },  
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: form.action,
+                        method: "POST",
+                        dataType: "json",
+                        data: $(form_add).serialize(),
+                        success: function(result){
+                            if(result.code != 200) {
+                                showToastr(result.message, 0, 3000, '系统错误');
+                                return;
+                            }
+                            showToastr(result.data.message, 0);
+                            $('#modal-add').modal('hide');
+                        },
+                        error: function(Xhr){
+                            showToastr("出现未知错误，请重试", 0);
                         }
-                        showToastr(result.data.message, 0);
-                        $('#modal-add').modal('hide');
-                    },
-                    error: function(Xhr){
-                        showToastr("出现未知错误，请重试", 0);
-                    }
-                });
-            }                     
+                    });
+                }                     
+            });
         });
-    });
     function optionModify(optionName){
         $("#modal-6 .modal-body").html(modal_default_body);
         reset(false);
