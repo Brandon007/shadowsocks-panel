@@ -130,7 +130,6 @@
             </div>
             <form role="form" id="form_add" method="post" action="/admin/setting/update.json" class="validate">
                 <input type="hidden" name="form_add" value="{(time())}"/>
-                <input type="hidden" name="option_k" id="option_k" value=""/>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -211,63 +210,63 @@
                 });
             }
         });
+        $("form#form_add").validate({
+            rules: {
+                'option_k': "required",
+                'option_v': "required"
+            },
+            messages: {
+                'option_k': "这里必填啊喂",
+                'option_v': "这里也要填啊喂"
+            },  
+            errorElement: 'span',
+            errorClass: 'validate-has-error',
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('validate-has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('validate-has-error');
+            },
+            errorPlacement: function (error, element)
+            {
+                if(element.closest('.has-switch').length)
+                {
+                    error.insertAfter(element.closest('.has-switch'));
+                }
+                else {
+                    if(element.parent('.checkbox, .radio').length || element.parent('.input-group').length)
+                    {
+                        error.insertAfter(element.parent());
+                    }
+                    else
+                    {
+                        error.insertAfter(element);
+                    }
+                }
+            },                
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    method: "POST",
+                    dataType: "json",
+                    data: $(form_add).serialize(),
+                    success: function(result){
+                        if(result.code != 200) {
+                            showToastr(result.message, 0, 3000, '系统错误');
+                            return;
+                        }
+                        showToastr(result.data.message, 0);
+                        $('#modal-add').modal('hide');
+                    },
+                    error: function(Xhr){
+                        showToastr("出现未知错误，请重试", 0);
+                    }
+                });
+            }                     
+        });
         $("#option-add").on('click', function(){
             reset(true);
             $('#modal-add').modal('show', {backdrop: 'static'});
-            $("form#form_add").validate({
-                rules: {
-                    'option_k': "required",
-                    'option_v': "required"
-                },
-                messages: {
-                    'option_k': "这里必填啊喂",
-                    'option_v': "这里也要填啊喂"
-                },  
-                errorElement: 'span',
-                errorClass: 'validate-has-error',
-                highlight: function (element) {
-                    $(element).closest('.form-group').addClass('validate-has-error');
-                },
-                unhighlight: function (element) {
-                    $(element).closest('.form-group').removeClass('validate-has-error');
-                },
-                errorPlacement: function (error, element)
-                {
-                    if(element.closest('.has-switch').length)
-                    {
-                        error.insertAfter(element.closest('.has-switch'));
-                    }
-                    else {
-                        if(element.parent('.checkbox, .radio').length || element.parent('.input-group').length)
-                        {
-                            error.insertAfter(element.parent());
-                        }
-                        else
-                        {
-                            error.insertAfter(element);
-                        }
-                    }
-                },                
-                submitHandler: function(form) {
-                    $.ajax({
-                        url: form.action,
-                        method: "POST",
-                        dataType: "json",
-                        data: $(form_add).serialize(),
-                        success: function(result){
-                            if(result.code != 200) {
-                                showToastr(result.message, 0, 3000, '系统错误');
-                                return;
-                            }
-                            showToastr(result.data.message, 0);
-                            $('#modal-add').modal('hide');
-                        },
-                        error: function(Xhr){
-                            showToastr("出现未知错误，请重试", 0);
-                        }
-                    });
-                }                     
-            });
         });
     });
     function optionModify(optionName){
