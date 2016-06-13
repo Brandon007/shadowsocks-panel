@@ -86,7 +86,7 @@
                                 <div class="form-group">
                                     <label for="field-1" class="control-label">键</label>
                                     <input type="text" class="form-control disable" disabled="disabled" name="option.k2" id="field-1"
-                                           value="" placeholder="option.k">
+                                           value="" placeholder="option.k"/>
                                 </div>
 
                             </div>
@@ -140,7 +140,7 @@
                                 <div class="form-group">
                                     <label for="field_1" class="control-label">键</label>
                                     <input type="text" class="form-control disable" name="option_k" id="field_1"
-                                           value="">
+                                           value=""/>
                                 </div>
 
                             </div>
@@ -224,14 +224,14 @@
         $("#option-add").on('click', function(){
             reset(true);
             $('#modal-add').modal('show', {backdrop: 'static'});
-            $("form#form1").validate({
+            $("form#form_add").validate({
                 rules: {
                     'option_k': "required",
                     'option_v': "required"
                 },
                 messages: {
                     'option_k': "这里必填啊喂",
-                    'option.v': "这里也要填啊喂"
+                    'option_v': "这里也要填啊喂"
                 },  
                 submitHandler: function(form) {
                     $.ajax({
