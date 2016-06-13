@@ -120,6 +120,52 @@
 
     </div>
 </div>
+<div class="modal fade" id="modal-add">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <form role="form" id="form_add" method="post" action="/admin/setting/update.json" class="validate">
+                <input type="hidden" name="form_add" value="{(time())}"/>
+                <input type="hidden" name="option_k" id="option_k" value=""/>
+                <div class="modal-body">
+                    <div id="modal_isload">Content is loading...</div>
+                    <div id="modal_isbody" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="field_1" class="control-label">键</label>
+                                    <input type="text" class="form-control disable" name="option_k" id="field_1"
+                                           value="">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <div class="form-group" id="option_value">
+                                    <label for="field_2" class="control-label" >值</label>
+                                    <textarea class="form-control" rows="10" name="option_v" id="field_2"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-success">立即保存</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 <script type="text/javascript">
     var modal_default_body = jQuery('#modal-6 .modal-body').html();
     jQuery(document).ready(function($) {
@@ -175,7 +221,37 @@
                 });
             }
         });
-
+        $("#node-add").on('click', function(){
+            $('#modal-add').modal('show', {backdrop: 'static'});
+        $("form#form1").validate({
+            rules: {
+                'option_k': "required",
+                'option_v': "required"
+            },
+            messages: {
+                'option_k': "这里必填啊喂",
+                'option.v': "这里也要填啊喂"
+            },  
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    method: "POST",
+                    dataType: "json",
+                    data: $(form_add).serialize(),
+                    success: function(result){
+                        if(result.code != 200) {
+                            showToastr(result.message, 0, 3000, '系统错误');
+                            return;
+                        }
+                        showToastr(result.data.message, 0);
+                        $('#modal-add').modal('hide');
+                    },
+                    error: function(Xhr){
+                        showToastr("出现未知错误，请重试", 0);
+                    }
+                });
+            }                     
+        });
     });
     function optionModify(optionName){
         $("#modal-6 .modal-body").html(modal_default_body);
