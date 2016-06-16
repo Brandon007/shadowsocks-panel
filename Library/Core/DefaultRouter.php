@@ -11,6 +11,7 @@ class DefaultRouter
     protected $foundController = false;
     protected $requestController = "";
     protected $requestMethod = "";
+    protected $phpPath = "";
     public function handleRequest()
     {
         $requestPath = Request::getRequestPath();
@@ -21,7 +22,7 @@ class DefaultRouter
         Filter::preRoute($requestPath);
         $this->findController($requestPath);
         if (!$this->foundController) {
-            throw new Error('The request URL is not exists' . 'requestPath->{' . $requestPath .'}' .'Controller->{' . $this->requestController .'}' . 'requestMethod->{' . $this->requestMethod.'}', 404);
+            throw new Error('The request URL is not exists' . 'requestPath->{' . $requestPath .'}' .'Controller->{' . $this->requestController .'}' . 'requestMethod->{' . $this->requestMethod.'}' .'phpPath->' . $this->phpPath, 404);
         }
     }
 
@@ -56,6 +57,6 @@ class DefaultRouter
                 $this->requestController = $controller;
                 $this->requestMethod = $method;
             }
-        }
+        }else{$this->phpPath = LIBRARY_PATH . "Controller/{$subDir}{$controller}.php"}
     }
 }
