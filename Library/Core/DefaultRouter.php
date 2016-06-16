@@ -57,6 +57,8 @@ class DefaultRouter
                 $this->requestController = $controller;
                 $this->requestMethod = $method;
             }
-        }else{$this->phpPath = LIBRARY_PATH . "Controller/{$subDir}{$controller}.php"}
+        }else{
+            $this->phpPath = LIBRARY_PATH . "Controller/{$subDir}{$controller}.php";
+        }
     }
 }
