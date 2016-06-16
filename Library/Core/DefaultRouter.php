@@ -21,7 +21,7 @@ class DefaultRouter
         Filter::preRoute($requestPath);
         $this->findController($requestPath);
         if (!$this->foundController) {
-            throw new Error('The request URL is not exists.Controller->' . $this->requestController . 'requestMethod' . $this->requestMethod, 404);
+            throw new Error('The request URL is not exists.Controller->' . 'requestPath->' . $requestPath . $this->requestController . 'requestMethod->' . $this->requestMethod, 404);
         }
     }
 
