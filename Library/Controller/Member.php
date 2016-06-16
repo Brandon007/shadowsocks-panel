@@ -86,6 +86,14 @@ class Member
     }
 
     /**
+     * wiki页面
+     */
+    public function wiki()
+    {
+        Template::setView("wiki/index");
+    }
+
+    /**
      *    Invite list
      *    2015.11.11 start
      */
