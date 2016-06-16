@@ -63,7 +63,10 @@ class Member
 
         // Message
         $data['globalMessage'] = Message::getGlobalMessage();
-
+        //buying
+        $data['buyFixedTransfer'] = Option::get('buyFixedTransfer');
+        $data['buySeniorMember'] = Option::get('buySeniorMember');
+        $data['buySuperMember'] = Option::get('buySuperMember');
         Template::setContext($data);
         Template::setView('panel/member');
 
