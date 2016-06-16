@@ -1,42 +1,26 @@
 <?php
-/**
- * SS-Panel
- * A simple Shadowsocks management system
- * Author: Brandon
- */
 namespace Controller;
 
 use Core\Template;
 
-/**
- * Class Wiki
- * @package Controller
- */
-class Wiki
-{
-    public function index()
-    {
+class Wiki {
+    public function index() {
+        // TODO: Do something here
         Template::setView('wiki/index');
     }
-
-    public function pc()
-    {
+    public function pc() {
         Template::setView('wiki/pc');
     }
 
-    public function android()
-    {
+    public function android() {
         Template::setView('wiki/android');
     }
-    public function ipad()
-    {
+
+    public function ipad() {
         Template::setView('wiki/ipad');
     }
 
-    public function yueYu()
-    {
+    public function yueYu() {
         Template::setView('wiki/yueYu');
-    }
-
+    }    
 }
-?>
