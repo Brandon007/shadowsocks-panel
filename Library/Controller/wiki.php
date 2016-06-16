@@ -6,7 +6,7 @@ use Core\Template;
 class Wiki {
     public function index() {
         // TODO: Do something here
-        Template::setView('home/index');
+        Template::setView('wiki/index');
     }
     public function pc() {
         Template::setView('wiki/pc');
