@@ -39,6 +39,7 @@ class DefaultRouter
                 $method = 'index';
             } else {
                 $method = lcfirst($method);
+                $this->requestMethod = $method;
             }
             $className = str_replace('/', '\\', "Controller/{$subDir}{$controller}");
             $controller = new $className();
