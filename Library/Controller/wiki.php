@@ -19,23 +19,23 @@ class Wiki
         Template::setView('wiki/index');
     }
 
-    public function wiki-pc()
+    public function pc()
     {
-        Template::setView('wiki/wiki-pc');
+        Template::setView('wiki/pc');
     }
 
-    public function wiki-android()
+    public function android()
     {
-        Template::setView('wiki/wiki-android');
+        Template::setView('wiki/android');
     }
-    public function wiki-ipad()
+    public function ipad()
     {
-        Template::setView('wiki/wiki-ipad');
+        Template::setView('wiki/ipad');
     }
 
-    public function wiki-yueYu()
+    public function yueYu()
     {
-        Template::setView('wiki/wiki-yueYu');
+        Template::setView('wiki/yueYu');
     }
 
 }
