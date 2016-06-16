@@ -9,7 +9,8 @@ namespace Core;
 class DefaultRouter
 {
     protected $foundController = false;
-
+    protected $requestController = "";
+    protected $requestMethod = "";
     public function handleRequest()
     {
         $requestPath = Request::getRequestPath();
@@ -20,7 +21,7 @@ class DefaultRouter
         Filter::preRoute($requestPath);
         $this->findController($requestPath);
         if (!$this->foundController) {
-            throw new Error('The request URL is not exists', 404);
+            throw new Error('The request URL is not exists.Controller->' . $this->requestController . 'requestMethod' . $this->requestMethod, 404);
         }
     }
 
@@ -51,6 +52,8 @@ class DefaultRouter
                 Template::render();
                 Filter::afterRender();
                 $this->foundController = true;
+                $this->requestController = $controller;
+                $this->requestMethod = $method;
             }
         }
     }
