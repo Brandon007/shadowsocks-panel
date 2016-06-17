@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class UpdateVersion120 extends AbstractMigration
+class UpdateBuying extends AbstractMigration
 {
     public function change()
     {
