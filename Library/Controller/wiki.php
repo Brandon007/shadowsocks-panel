@@ -12,6 +12,10 @@ class Wiki {
         Template::setView('wiki/pc');
     }
 
+    public function mac(){
+        Template::setView('wiki/mac');
+    }
+
     public function android() {
         Template::setView('wiki/android');
     }
