@@ -58,7 +58,7 @@
         <div class="progress progress-striped active" style="height: 20px;position: absolute;left:30px;right:30px;top:30%">
             <div class="progress-bar progress-bar-info" style="width: {$pctTransfer}%;height:20px;"></div>
         </div>
-        <div style="position: absolute;left:30px;right:30px;top:40%">共有流量：{$allTransfer}<br/>可用流量：{$slaTransfer}<br/><br/>您的当前IP：<code>{$userIp}</code><br/>您的地区：<code id="country_id">获取中.</code><br/>
+        <div style="position: absolute;left:30px;right:30px;top:40%">共有流量：{$allTransfer}<br/>可用流量：{$slaTransfer}<br/><br/>您的当前IP：<code>{$userIp}</code><br/>
             <h2><a href="/wiki" target="_blank"><span style="color:#c7254e;font-weight:bold;">使用教程&gt;&gt;</span></a></h2>
         </div>
         <div  style="height: 298px;">
@@ -220,36 +220,6 @@
 
             $("#modal-1").modal("show", {backdrop:"fade"});
         });
-        $.get("/api/queryCountry.json",{}, function(data){
-            var flag = data.code;
-            var desc = "";
-            if(flag == "0") {
-                if(data.data.country != '' && data.data.country != undefined){
-                    desc += data.data.country;
-                }
-                if(data.data.area != '' && data.data.area != undefined){
-                    desc += " " + data.data.area;
-                }
-                if(data.data.region != '' && data.data.region != undefined){
-                    desc += " " + data.data.region;
-                }
-                if(data.data.city != '' && data.data.city != undefined){
-                    desc += " " + data.data.city;
-                }
-                if(data.data.county != '' && data.data.county != undefined) {
-                    desc += " " + data.data.county;
-                }
-                if(data.data.isp != '' && data.data.isp != undefined) {
-                    desc += " " + data.data.isp;
-                }
-                if(desc == "" || desc == undefined)
-                    desc = "未知";
-            } else {
-                desc = "未知";
-            }
-
-            $("#country_id").html(desc);
-        },"json");
     });
 </script>
 <import template="/panel/_footer" />
