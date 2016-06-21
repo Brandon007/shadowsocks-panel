@@ -128,23 +128,11 @@
                         <span class="label label-success pull-right">{$openNode}/{$allNode}</span>
                     </a>
                 </li>
-                <li class="{(\Helper\Utils::menuActive('updatePlan|actCard', ' opened expanded'))} has-sub">
-                    <a href="javascript:;">
+                <li class="{(\Helper\Utils::menuActive('actCard'))}">
+                    <a href="/member/actCard" class="pjax">
                         <i class="fa fa-diamond"></i>
-                        <span class="title">激活充值</span>
+                        <span class="title">卡号充值</span>
                     </a>                
-                    <ul>
-                        <li class="{(\Helper\Utils::menuActive('updatePlan'))}">
-                            <a href="/member/changePlan" class="pjax">
-                                <span class="title">续费升级</span>
-                            </a>
-                        </li>
-                        <li class="{(\Helper\Utils::menuActive('actCard'))}">
-                            <a href="/member/actCard" class="pjax">
-                                <span class="title">卡号充值</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="{(\Helper\Utils::menuActive('info'))}">
                     <a href="/member/info" class="pjax">
@@ -152,22 +140,27 @@
                         <span class="title">个人资料</span>
                     </a>
                 </li>
-                <li class="{(\Helper\Utils::menuActive('modify', ' opened expanded'))} has-sub">
+                <li class="{(\Helper\Utils::menuActive('Change', ' opened expanded'))} has-sub">
                     <a href="javascript:;">
                         <i class="fa fa-pencil"></i>
                         <span class="title">资料修改</span>
                     </a>
                     <ul>
-                        <li class="{(\Helper\Utils::menuActive('ModifiedPassword'))}">
+                        <li class="{(\Helper\Utils::menuActive('ChangePassword'))}">
                             <a href="/member/changePassword" class="pjax">
                                 <span class="title">密码修改</span>
                             </a>
                         </li>
-                        <li class="{(\Helper\Utils::menuActive('ModifiedNickname'))}">
+                        <li class="{(\Helper\Utils::menuActive('ChangeNickname'))}">
                             <a href="/member/changeNickname" class="pjax">
                                 <span class="title">昵称修改</span>
                             </a>
                         </li>
+                        <li class="{(\Helper\Utils::menuActive('ChangePlan'))}">
+                            <a href="/member/changePlan" class="pjax">
+                                <span class="title">续费升级</span>
+                            </a>
+                        </li>                        
                         <li>
                             <a href="https://cn.gravatar.com/" target="_blank" title="Gravatar 全球通用头像">
                                 <span class="title">修改头像</span>
