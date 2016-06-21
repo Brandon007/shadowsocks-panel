@@ -49,20 +49,25 @@ class Card
                     $result['message'] = '您的流量套餐尚未使用完毕。无法转换到 ' . Utils::planAutoShow($card->info) . ' 套餐';
                     return $result;
                 }
-                //判断账户卡号类型是否一致 一致则无视系统叠加开关进行 叠加时间
+
                 $user->payTime = time();
-                if (($user->flow_up + $user->flow_down) < $user->transfer) {
+            /*    if (($user->flow_up + $user->flow_down) < $user->transfer) {
                     $user->enable = 1;
                 } else {
                     $user->enable = 0;
                 }
+            */
+                $user->transfer = intval($card->info) * Utils::GB; // 清空总流量并设定新流量
+                $user->flow_up = 0;
+                $user->flow_down = 0;
+                $user->enable = 1;                
                 $cardDay = 31;
                 if (is_numeric($card->expireTime)) {
                     $cardDay = intval($card->expireTime);
                 }
 
                 $expireTime = 0;
-
+                //判断账户卡号类型是否一致 一致则无视系统叠加开关进行 叠加时间
                 if ($user->plan == $card->info) { // 卡片与账户类型相等
                     if ($user->expireTime > time()) {
                         $expireTime = $user->expireTime + (3600 * 24 * $cardDay);// 到期时间 = 当前账户到期时间+卡片时间
@@ -91,11 +96,12 @@ class Card
                     $user->flow_up = 0;
                     $user->flow_down = 0;
                 }
-                if (($user->flow_up + $user->flow_down) < $user->transfer) {
+                /*if (($user->flow_up + $user->flow_down) < $user->transfer) {
                     $user->enable = 1;
                 } else {
                     $user->enable = 0;
-                }
+                }*/
+                $user->enable = 1;
                 $user->plan = 'Z'; // 强制设定为Z
                 $user->expireTime = strtotime("+1 year"); // 账户可用时间增加一年
                 $result['message'] = '您的账户已经激活固定流量套餐，共有流量' . Utils::flowAutoShow($user->transfer) . ' ,该流量到期时间 ' . date('Y-m-d H:i:s',
