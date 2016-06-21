@@ -16,7 +16,7 @@ function flowMessage() {
 setInterval("flowMessage()", 1500);
 var bgm = $("#bgmusic")[0];
 
-bgm.volume = .1;
+bgm.volume = .3;
 
 var BASEDIR = "/Resource/Default/home/images/", IMGNUM = 17;
 
