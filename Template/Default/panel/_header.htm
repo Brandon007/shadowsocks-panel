@@ -30,7 +30,8 @@
                 <div class="user-info">
                     <div class="user-image">
                         <a href="/member">
-                            <img src="{(\Helper\Utils::gravatar($user->email))}" class="img-responsive img-circle" />
+                        <!--<img src="{(\Helper\Utils::gravatar($user->email))}" class="img-responsive img-circle" />-->
+                            <img src="{RESOURCE}/images/user-2.png" class="img-responsive img-circle" />
                         </a>
                     </div>
                     <div class="user-details">
@@ -127,13 +128,19 @@
                         <span class="label label-success pull-right">{$openNode}/{$allNode}</span>
                     </a>
                 </li>
+                <li class="{(\Helper\Utils::menuActive('actCard'))}">
+                    <a href="/member/actCard" class="pjax">
+                        <i class="fa fa-diamond"></i>
+                        <span class="title">卡号充值</span>
+                    </a>                
+                </li>
                 <li class="{(\Helper\Utils::menuActive('info'))}">
                     <a href="/member/info" class="pjax">
                         <i class="fa fa-user"></i>
                         <span class="title">个人资料</span>
                     </a>
                 </li>
-                <li class="{(\Helper\Utils::menuActive('Change|actCard', ' opened expanded'))} has-sub">
+                <li class="{(\Helper\Utils::menuActive('Change', ' opened expanded'))} has-sub">
                     <a href="javascript:;">
                         <i class="fa fa-pencil"></i>
                         <span class="title">资料修改</span>
@@ -149,24 +156,14 @@
                                 <span class="title">昵称修改</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="https://cn.gravatar.com/" target="_blank" title="Gravatar 全球通用头像">
-                                <span class="title">修改头像</span>
-                            </a>
-                        </li>
                         <li class="{(\Helper\Utils::menuActive('ChangePlan'))}">
                             <a href="/member/changePlan" class="pjax">
                                 <span class="title">续费升级</span>
                             </a>
-                        </li>
-                        <li class="{(\Helper\Utils::menuActive('actCard'))}">
-                            <a href="/member/actCard" class="pjax">
-                                <span class="title">卡号充值</span>
-                            </a>
-                        </li>
-                        <li class="{(\Helper\Utils::menuActive('ChangeMethod'))}">
-                            <a href="/member/changeMethod" class="pjax">
-                                <span class="title">自定义节点加密</span>
+                        </li>                        
+                        <li>
+                            <a href="https://cn.gravatar.com/" target="_blank" title="Gravatar 全球通用头像">
+                                <span class="title">修改头像</span>
                             </a>
                         </li>
                     </ul>
