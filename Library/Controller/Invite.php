@@ -33,7 +33,7 @@ class Invite
     public function create()
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
-        $unUsedInvites = InviteModel::getInvitesByUid($user->uid,0);
+        $unUsedInvites = InviteModel::getInvitesByUid($user->uid,"0");
         $unUsedCount = count($unUsedInvites);
         $result = array('error' => 1, 'message' => "创建邀请码失败，你还有{$unUsedCount}个邀请码没用完,请用完再申请!");
 
