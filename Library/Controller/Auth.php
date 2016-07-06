@@ -289,6 +289,7 @@ class Auth
                         $transfer = Utils::GB * 2;
                         $originalUser = User::getUserByUserId($currentInvite->uid);
                         $originalUser->transfer = $originalUser->transfer + $transfer;
+                        $originalUser->save();
                     }
                     $html = <<<EOF
 <!DOCTYPE html>
