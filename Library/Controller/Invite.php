@@ -33,21 +33,31 @@ class Invite
     public function create()
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
+        $unUsedInvites = InviteModel::getInvitesByUid($user->uid,0);
+        $unUsedCount = count(unUsedInvites);
+        $result = array('error' => 1, 'message' => '创建邀请码失败，你还有{$unUsedCount}个邀请码没用完,请用完再申请!');
 
-        $result = array('error' => 1, 'message' => '创建邀请码失败，您没有再次创建邀请码的次数了。当然，你可以用流量购买次数。(10GB/个)');
-
-        if ($user->invite_num > 0) {
-            $invite = InviteModel::addInvite($user->uid, 'A', false);
-            $result = array(
-                'error' => 0,
-                'message' => '创建邀请码成功，刷新后可见',
-                'invite_num' => $user->invite_num - 1,
-                'invite' => $invite
-            );
-            $user->invite_num = $user->invite_num - 1;
-            $user->save();
+        if($unUsedCount>=5){
+            return $result;
         }
 
+        // if ($user->invite_num > 0) {
+        //     $invite = InviteModel::addInvite($user->uid, 'A', false);
+        //     $result = array(
+        //         'error' => 0,
+        //         'message' => '创建邀请码成功，刷新后可见',
+        //         'invite_num' => $user->invite_num - 1,
+        //         'invite' => $invite
+        //     );
+        //     $user->invite_num = $user->invite_num - 1;
+        //     $user->save();
+        // }
+        $invite = InviteModel::addInvite($user->uid, 'A', false);
+        $result = array(
+            'error' => 0,
+            'message' => '创建邀请码成功，刷新后可见',
+            'invite' => $invite
+        );        
         return $result;
     }
 
