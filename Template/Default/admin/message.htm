@@ -21,6 +21,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"></h3>
                         <div class="panel-options">
+                            <a href="javascript:;" id="mailer-to-active"><span>To有效用户</span></a>
                             <a href="javascript:;" id="mailer-add"><span>群邮件</span></a>
                             <a href="javascript:;" id="message-add"><span>+</span></a>
                             <a href="javascript:;" data-toggle="reload">
@@ -276,6 +277,22 @@
             $('#modal-6').modal('show', {backdrop: 'static'});
 
         });
+
+        $("#mailer-to-active").on('click', function(){
+
+            var newHtml = '<div class="row"><div class="col-md-12">';
+            newHtml += '<div class="form-group no-margin"><label for="field-0" class="control-label">消息标题</label>';
+            newHtml += '<input class="form-control autogrow" name="mailer.subject" id="field-0" /></div>';
+            newHtml += '<div class="form-group no-margin"><label for="field-1" class="control-label">消息内容</label>';
+            newHtml += '<textarea class="form-control autogrow" name="mailer.content" rows="15" id="field-0" placeholder="请填写消息内容，支持 HTML 标记"></textarea>';
+            newHtml += '<p><br/>支持消息内容标记：{SITE_NAME} : 站点名称,{nickname}  : 当前用户名称,{email}     : 用户电子邮件,{useTraffic}: 已用流量,{transfer}  : 总流量,{expireTime}: 到期时间</p>';
+            newHtml += '</div></div>';
+            $("#form1").attr("action", "admin/mailer/postAll.json?toActive=1");
+            $("#modal-6 .modal-body").html(newHtml);
+            $('#modal-6 .modal-title').html('系统邮件群发到有效用户');
+            $('#modal-6').modal('show', {backdrop: 'static'});
+
+        });        
     });
 
     function messageRemove(messageId){

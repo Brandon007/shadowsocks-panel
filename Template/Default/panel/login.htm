@@ -30,7 +30,7 @@
     					</label>
                     </div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-dark  btn-block text-left">
+						<button type="submit" class="btn btn-secondary  btn-block text-left">
 							<i class="fa-lock"></i>
 							登 录
 						</button>
@@ -68,7 +68,7 @@
 						<input type="text" class="form-control input-dark" name="r_invite" id="r_invite" value="{($_GET['invite'])}" autocomplete="off" placeholder="邀请码" />
 					</div>
 					<div class="form-group">
-						<a type="button" class="btn btn-dark btn-block text-left" href="/invite">
+						<a type="button" class="btn btn-secondary btn-block text-left" href="/invite">
 							<i class="fa-heart"></i>
 							邀请码这里获取
 						</a>
@@ -80,7 +80,7 @@
 						</button>
 					</div>
 					<div class="form-group">
-						<a type="button" class="btn btn-dark btn-block text-left login-button" href="/auth/login<php>if($_GET['invite'] != '') echo '?invite='. $_GET['invite'];</php>#login">
+						<a type="button" class="btn btn-secondary btn-block text-left login-button" href="/auth/login<php>if($_GET['invite'] != '') echo '?invite='. $_GET['invite'];</php>#login">
 							<i class="fa-lock"></i>
 							返 回 登 录
 						</a>

@@ -83,14 +83,18 @@ class Mailer
      */
     public function postAll()
     {
+        $toActive = $_Get['toActive'];
         $subject = $_POST['mailer_subject'];
         $content = nl2br(htmlspecialchars($_POST['mailer_content']));
         $content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) 管理员发送</p>";
         if ($subject == null || $subject == '' || $content == null || $content == '') {
             return array('error' => 1, 'message' => '请求错误，您提交的参数不对。');
         }
-        // $users = User::getUserList();
-        $users = User::getActiveUserList();
+        if ($toActive == null || $toActive == '') {
+            $users = User::getUserList();
+        }else{
+            $users = User::getActiveUserList();           
+        }
         $mailer = Mailer1::getInstance();
         $mailer->toQueue(true);
 
