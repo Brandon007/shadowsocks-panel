@@ -124,6 +124,12 @@ class User extends Model
         return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
     }
 
+    public static function getActiveUserList(){
+        $statement = DB::getInstance()->prepare('SELECT t1.*, t2.id as `admin` FROM `member` t1 LEFT JOIN `admin` t2 ON t1.uid=t2.uid where t1.enable=1 ORDER BY uid');
+        $statement->execute();
+        return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);        
+    }
+
     public static function getCount()
     {
         $stn = DB::getInstance()->prepare("SELECT count(1) FROM `member`");

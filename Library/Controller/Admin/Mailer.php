@@ -89,7 +89,8 @@ class Mailer
         if ($subject == null || $subject == '' || $content == null || $content == '') {
             return array('error' => 1, 'message' => '请求错误，您提交的参数不对。');
         }
-        $users = User::getUserList();
+        // $users = User::getUserList();
+        $users = User::getActiveUserList();
         $mailer = Mailer1::getInstance();
         $mailer->toQueue(true);
 
