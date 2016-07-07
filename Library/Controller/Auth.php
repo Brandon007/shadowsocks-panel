@@ -274,7 +274,7 @@ class Auth
                         'email' => $user->email,
                         'useTraffic' => Utils::flowAutoShow($user->flow_up + $user->flow_down),
                         'transfer' => Utils::flowAutoShow($user->transfer),
-                        'expireTime' => date('Y-m-d H:i:s', $user->expireTime),
+                        'expireTime' => date('Y-m-d H:i:s', $user->expireTime)
                     ];
                     $mail->content = Utils::placeholderReplace($mail->content, $params);
                     $mailer->send($mail);
@@ -289,7 +289,24 @@ class Auth
                         $transfer = Utils::GB * 2;
                         $originalUser = User::getUserByUserId($currentInvite->uid);
                         $originalUser->transfer = $originalUser->transfer + $transfer;
+                        $originalUser->expireTime = $originalUser->expireTime + 60*60*24*7;
                         $originalUser->save();
+
+                        $mailer = Mailer::getInstance();
+                        $mailer->toQueue(true, true);
+                        $mail = new Mail();
+                        $mail->to = $originalUser->email;
+                        $mail->subject = '[' . SITE_NAME . '] 邀请用户成功奖励通知';
+                        $mail->content = Option::get('inviteBonusContent');
+                        $params = [
+                            'nickname' => $originalUser->nickname,
+                            'beInvited' => $user->nickname,
+                            'inviteBonus' => Option::get('inviteBonus'),
+                            'inviteBonusDay' => Option::get('inviteBonusDay')
+                        ];
+                        $mail->content = Utils::placeholderReplace($mail->content, $params);
+                        $mailer->send($mail);
+
                     }
                     $html = <<<EOF
 <!DOCTYPE html>
