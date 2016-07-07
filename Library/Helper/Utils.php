@@ -365,7 +365,7 @@ class Utils
         // 替换
         $content = str_replace(
             ['{SITE_NAME}', '{nickname}', '{email}', '{code}', '{newPassword}', '{useTraffic}', '{transfer}', '{expireTime}', '{REGISTER_URL}', '{beInvited}', '{inviteBonus}', '{invitedBonusDay}'],
-            [SITE_NAME, $params['nickname'], $params['email'], $params['code'], $params['newPassword'], $params['useTraffic'], $params['transfer'], $params['expireTime'], $params['REGISTER_URL'], $params['beInvited'], $params['inviteBonus'], $params['invitedBonusDay']],
+            [SITE_NAME, $params['nickname'], $params['email'], $params['code'], $params['newPassword'], $params['useTraffic'], $params['transfer'], $params['expireTime'], $params['REGISTER_URL'], $params['beInvited'], $params['inviteBonus'], $params['inviteBonusDay']],
             $content);
 
         return $content;
