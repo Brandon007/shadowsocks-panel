@@ -286,10 +286,10 @@ class Auth
 
                     $currentInvite = Invite::getInviteByRegUid($regid);
                     if($currentInvite->uid!=-1){//通过私人邀请码注册
-                        $transfer = Utils::GB * 2;
+                        $transfer = Utils::GB * Option::get('inviteBonus');
                         $originalUser = User::getUserByUserId($currentInvite->uid);
                         $originalUser->transfer = $originalUser->transfer + $transfer;
-                        $originalUser->expireTime = $originalUser->expireTime + 60*60*24*7;
+                        $originalUser->expireTime = $originalUser->expireTime + 60*60*24*Option::get('inviteBonusDay');
                         $originalUser->save();
 
                         $mailer = Mailer::getInstance();
