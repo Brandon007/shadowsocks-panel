@@ -293,7 +293,7 @@ class Auth
                         $originalUser->save();
 
                         $mailer = Mailer::getInstance();
-                        $mailer->toQueue(true, true);
+                        $mailer->toQueue(false);
                         $mail = new Mail();
                         $mail->to = $originalUser->email;
                         $mail->subject = '[' . SITE_NAME . '] 邀请用户成功奖励通知';
