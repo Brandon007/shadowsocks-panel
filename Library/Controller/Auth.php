@@ -289,6 +289,10 @@ class Auth
                         $transfer = Utils::GB * Option::get('inviteBonus');
                         $originalUser = User::getUserByUserId($currentInvite->uid);
                         $originalUser->transfer = $originalUser->transfer + $transfer;
+                        if ($originalUser->enable==0) {
+                            $originalUser->expireTime = time() + 60*60*24*Option::get('inviteBonusDay');
+                            $originalUser->enable = 1;
+                        }
                         $originalUser->expireTime = $originalUser->expireTime + 60*60*24*Option::get('inviteBonusDay');
                         $originalUser->save();
 
