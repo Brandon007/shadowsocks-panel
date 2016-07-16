@@ -57,9 +57,9 @@ class Card
                     $user->enable = 0;
                 }
             */
-                $user->transfer = intval($card->info) * Utils::GB; // 清空总流量并设定新流量
-                $user->flow_up = 0;
-                $user->flow_down = 0;
+                //$user->transfer = intval($card->info) * Utils::GB; // 清空总流量并设定新流量
+                //$user->flow_up = 0;
+                //$user->flow_down = 0;
                 $user->enable = 1;                
                 $cardDay = 31;
                 if (is_numeric($card->expireTime)) {
@@ -84,7 +84,7 @@ class Card
                 }
                 $user->expireTime = $expireTime;
                 $user->plan = $card->info;
-                $user->transfer = Utils::GB * intval($custom_transfer_level[$user->plan]);
+                $user->transfer += Utils::GB * intval($custom_transfer_level[$user->plan]);
 
                 $result['message'] = '您的账户已升级到 ' . Utils::planAutoShow($user->plan) . ' ,共有流量 ' . Utils::flowAutoShow($user->transfer) . ', 已用 ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', 到期时间：' . date('Y-m-d H:i:s',
                         $user->expireTime);
