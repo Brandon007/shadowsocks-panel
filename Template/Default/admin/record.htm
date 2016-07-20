@@ -1,0 +1,73 @@
+<import template="/admin/_header"/>
+<import template="/admin/_content"/>
+
+<div class="page-title">
+    <div class="title-env">
+        <h1 class="title">充值管理</h1>
+        <p class="description">充值记录列表！</p>
+    </div>
+    <div class="breadcrumb-env">
+        <ol class="breadcrumb bc-1">
+            <li><a href="/admin"><i class="fa-home"></i>管理端</a></li>
+            <li><a href="/admin/record">充值记录</a></li>
+        </ol>
+    </div>
+</div>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title"></h3>
+
+                        <div class="panel-options">
+                            <a href="/admin/record/export" title="导出到Excel.." target="_blank"><i class="fa-file-excel-o"></i></a>
+                            <a href="javascript:;" data-toggle="reload">
+                                <i class="fa-rotate-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-small-font table-bordered table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>UID</th>
+                                    <th>激活时间</th>
+                                    <th>邀请码</th>
+                                    <th>套餐</th>
+                                    <th>金额</th>
+                                    <th>充值用户</th>
+                                </tr>
+                                <if condition="count($recordList) > 0">
+                                    <loop variable="$recordList" key="$key" value="$record">
+                                        <tr id="record-{$record->id}">
+                                            <td>#{$record->uid}</td>
+                                            <td>{(date("Y-m-d H:i:s", $record->active_time))}</td>
+                                            <td> {$record->card}</td>
+                                            <td>{(\Helper\Utils::planAutoShow($record->info))}</td>
+                                            <td>{$record->money}</td>
+                                            <td>{$record->nickname}</td>
+                                        </tr>
+                                    </loop>
+                                    <else>
+                                        <tr id="record-0">
+                                            <td>#</td>
+                                            <td colspan="5">没有充值记录</td>
+                                        </tr>
+                                </if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+</div>
+</div>
+
+<import template="/admin/_footer"/>

@@ -371,6 +371,16 @@ class Utils
         return $content;
     }
 
+    public static function getMoneyByCardInfo($plan)
+    {
+        if($plan == 'C' || $plan == 'Z'){
+            return 10;
+        }elseif ($plan == 'D') {
+            return 25;
+        }else{
+            return 0;
+        }
+    }
 
     public static function getShortName(&$class)
     {
