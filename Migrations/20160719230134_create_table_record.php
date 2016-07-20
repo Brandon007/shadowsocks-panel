@@ -7,7 +7,7 @@ class CreateTableRecord extends AbstractMigration
 {
     public function change()
     {
-        $this->table("record", array('comment' => '充值记录', 'primary_key' => ['id']))
+        $this->table("record", array('id' => false,'comment' => '充值记录', 'primary_key' => ['id']))
             ->addColumn('id', 'integer', ['limit' => 10])
             ->addColumn('uid', 'integer', ['limit' => 10, 'default' => -1])
             ->addColumn('nickname', 'string', ['limit' => 64])
