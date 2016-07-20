@@ -14,6 +14,8 @@ class CreateTableRecord extends AbstractMigration
             ->addColumn('card', 'string', ['limit' => 60])
             ->addColumn('active_time', 'integer', ['null' => false])
             ->addColumn('type', 'string', ['limit'=> MysqlAdapter::INT_TINY, 'default'=> 0, 'comment'=> '类型 0-套餐卡 1-流量卡 2-测试卡'])
+            ->addColumn('info', 'string', ['limit' => 60])
+            ->addColumn('money', 'integer', ['limit' => 5])
             ->addIndex(['type'], ['unique' => true])
             ->create();
     }
