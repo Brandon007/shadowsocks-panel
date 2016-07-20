@@ -143,7 +143,7 @@ class Card
             $record->active_time = time();
             $record->type = $card->type;
             $record->info = $card->info;
-            $record->money = Utils::getMoneyByUserPlan($card->info);
+            $record->money = Utils::getMoneyByCardInfo($card->info);
             $record->save();
 
             $card->destroy(); // 将此卡片禁止
