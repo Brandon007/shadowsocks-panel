@@ -9,7 +9,7 @@
 namespace Controller\Admin;
 
 use Core\Template;
-use Model\Record;
+use Model\Record as MRecord;
 
 /**
  * Class Record
@@ -22,7 +22,7 @@ class Record
 
     public function index()
     {
-        $data['recordList'] = Record::queryAll();
+        $data['recordList'] = MRecord::queryAll();
         Template::setContext($data);
         Template::setView('admin/record');
     }
@@ -32,7 +32,7 @@ class Record
      */
     public function export()
     {
-        $records = Record::queryAll();
+        $records = MRecord::queryAll();
         $file_name = '充值记录列表_' . time() . '.csv';
         $data = 'uid,邀请码,邀请码等级,金额,充值时间,充值人'. "\n";
         foreach ($records as $record) {
