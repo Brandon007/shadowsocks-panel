@@ -13,6 +13,7 @@ use Helper\Option;
 use Helper\Utils;
 use Model\Card as Mcard;
 use Model\User;
+use Helper\Mailer;
 
 /**
  * Class Card
@@ -132,10 +133,29 @@ class Card
                 $user->save();
                 $result['message'] = '余额充值成功，您当前余额为 ' . $user->money . ' 元';
             }
+            // 保存充值记录
+            $record = new Record();
+            $record->uid = $user->uid;
+            $record->nickname = $user->nickname;
+            $record->card = $card->card;
+            $record->active_time = time();
+            $record->type = $card->type;
+            $record->info = $card->info;
+            $record->money = Utils::getMoneyByUserPlan($card->info);
+            $record->save();
+
             $card->destroy(); // 将此卡片禁止
             $user->save();
             $_SESSION['currentUser'] = $user; // 将用户信息更新到 session 中.
-
+            // 发送成功通知邮件
+            $mailer = Mailer::getInstance();
+            $mailer->toQueue(false);
+            $mail = new Mail();
+            $mail->to = User::getUserByUserId(1)->email;
+            $mail->subject = '[' . SITE_NAME . '] 成功充值通知';
+            $mail->content = '用户[' . $record->nickname . ']于' . date('Y-m-d H:i:s',$record->active_time) . '购买' . $record->money .'元' . Utils::planAutoShow($user->plan);
+            $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) 系统发送</p>";
+            $mailer->send($mail);
         }
 
         return $result;
