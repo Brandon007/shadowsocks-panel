@@ -15,7 +15,7 @@ use Model\Card as Mcard;
 use Model\User;
 use Helper\Mailer;
 use Model\Mail;
-use Model\Record
+use Model\Record;
 
 /**
  * Class Card
