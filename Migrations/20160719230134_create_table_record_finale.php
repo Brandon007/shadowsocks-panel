@@ -3,7 +3,7 @@
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
-class CreateTableRecordV2 extends AbstractMigration
+class CreateTableRecordFinale extends AbstractMigration
 {
     public function change()
     {
