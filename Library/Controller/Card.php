@@ -95,7 +95,7 @@ class Card
                 if ($user->plan == 'Z') {
                     $user->transfer += intval($card->info) * Utils::GB; // 如果之前是 流量 套餐，则递增
                 } else {
-                    $user->transfer = intval($card->info) * Utils::GB; // 如果之前是 普通套餐，则清空总流量并设定新流量
+                    $user->transfer += intval($card->info) * Utils::GB; // 如果之前是 普通套餐，则清空总流量并设定新流量
                     $user->flow_up = 0;
                     $user->flow_down = 0;
                 }
@@ -123,7 +123,7 @@ class Card
                 } else {
                     $user->expireTime = $user->expireTime + (3600 * 24 * intval($user_test_day)); // 到期时间
                 }
-                $user->transfer = Utils::GB * intval($custom_transfer_level[$user->plan]);
+                $user->transfer += Utils::GB * intval($custom_transfer_level[$user->plan]);
                 $user->flow_down = 0;
                 $user->flow_up = 0;
                 $user->enable = 1;
@@ -143,7 +143,7 @@ class Card
             $record->active_time = time();
             $record->type = $card->type;
             $record->info = $card->info;
-            $record->money = Utils::getMoneyByCardInfo($card->info);
+            $record->money = Utils::getMoneyByUserPlan($user->plan);
             $record->save();
 
             $card->destroy(); // 将此卡片禁止
