@@ -124,8 +124,8 @@
                 <div  class="h1 text-purple text-bold">连接信息</div>
                 端口：<code>{$user->port}</code><br />
                 密码：<div id="showpwd" style="display: inline"><b>{$user->sspwd}</b></div><br />
-                加密方式：<code>{$user->method}</code><br />
-                服务器地址：<code><a href="node">点击查看</a></code><br />
+                加密方式：<code>chacha20</code><br />
+                服务器地址：<code><a href="/member/node">点击查看</a></code><br />
                 <button class="btn btn-sm btn-info" id="plan-level">{$user->getPlan()}</button>   &nbsp;
                 <button class="btn btn-sm btn-secondary" id="updatePlan"> 升级套餐 </button>   &nbsp;
                 <button class="btn btn-sm btn-secondary" id="planList"> 套餐详情 </button><br /><br />
