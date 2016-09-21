@@ -225,4 +225,12 @@ class User extends Model
     {
         return $this->flow_up + $this->flow_down;
     }
+
+    public static function getNextAvailablePort($month=1)
+    {
+        $statement = DB::getInstance()->prepare('SELECT * FROM `member` where unix_timestamp(now())-expireTime > :month and enable = 0');
+        $statement->bindValue(":month", $month*30*86400, DB::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
+    }
 }

@@ -66,7 +66,7 @@ class Auth
                         $_SESSION['currentUser'] = $user;
                         Logger::getInstance()->info('user [' . $user->email . '] Login success');
                     } else {
-                        $result['message'] = "账户名或密码错误, 请检查后再试!";
+                        $result['message'] = "账户名或密码错误, 请检查后再试!注意:如果是到期超过一个月,有可能被系统回收了,请重新注册一个账号O(∩_∩)O";
                         Logger::getInstance()->info('user [' . $user->email . '] Login failed! wrong password');
                     }
                 }
@@ -181,8 +181,14 @@ class Auth
                             $user->enable = 1; // 第一个账户，默认设定为启用
                             $user->forgePwdCode = null;
                         }
-
-                        $user->port = Utils::getNewPort(); // 端口号
+                        $reuseUsers = User::getNextAvailablePort(Option::get('reuseMonth'));
+                        if(null != $reuseUsers && count($reuseUsers)>0){
+                            $user->port = $reuseUsers[0]->port;//端口重用
+                            $reuseUsers[0]->delete();
+                        }else{
+                            $user->port = Utils::getNewPort(); // 新端口号
+                        }
+                        
                         $user->setPassword($passwd);
                         $user->save();
 
@@ -368,7 +374,7 @@ EOF;
      */
     public function forgePwd()
     {
-        $result = array('error' => 1, 'message' => '请求找回密码失败，请刷新页面重试。');
+        $result = array('error' => 1, 'message' => '找不到该用户信息,注意:如果是到期超过一个月,有可能被系统回收了,请重新注册一个账号O(∩_∩)O');
         $siteName = SITE_NAME;
 
         if (isset($_POST['email']) && $_POST['email'] != '') {
