@@ -32,7 +32,7 @@ class Member
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
         $data['user'] = $user;
-
+        /*    
         $data['online'] = Stats::countOnline();
         $data['userCount'] = Stats::countUser();
         $data['useUserCount'] = Stats::countUseUser(); // 使用过服务的用户数
@@ -41,7 +41,7 @@ class Member
         if ($data['online'] !== 0 && $data['userCount'] !== 0) {
             $data['onlineNum'] = round($data['online'] / $data['userCount'], 2) * 100;
         }
-
+        */
         $data['allTransfer'] = Utils::flowAutoShow($user->transfer);
         $data['useTransfer'] = $user->flow_up + $user->flow_down; // round(() / Utils::mb(), 2);
         $data['slaTransfer'] = Utils::flowAutoShow($user->transfer - $data['useTransfer']);
@@ -383,18 +383,18 @@ class Member
      */
     public function deleteMe()
     {
-        $user = User::getCurrent();
+        // $user = User::getCurrent();
 
-        $flag = $_POST['delete'];
+        // $flag = $_POST['delete'];
         $result = array('error' => 1, "message" => "请求错误");
-        if ($flag != null && $flag == '1') {
-            $user->delete();
-            $result = array("error" => 0, "message" => "您已经从本站消除所有记忆，将在 3秒 后执行世界初始化...<br/>祝您过得愉快。");
-            $_SESSION['currentUser'] = null;
-            setcookie("uid", '', time() - 3600, "/");
-            setcookie("expire", '', time() - 3600, "/");
-            setcookie("token", '', time() - 3600, "/");
-        }
+        // if ($flag != null && $flag == '1') {
+        //     $user->delete();
+        //     $result = array("error" => 0, "message" => "您已经从本站消除所有记忆，将在 3秒 后执行世界初始化...<br/>祝您过得愉快。");
+        //     $_SESSION['currentUser'] = null;
+        //     setcookie("uid", '', time() - 3600, "/");
+        //     setcookie("expire", '', time() - 3600, "/");
+        //     setcookie("token", '', time() - 3600, "/");
+        // }
 
         return $result;
     }

@@ -371,7 +371,7 @@ class Utils
         return $content;
     }
 
-    public static function getMoneyByCardInfo($plan)
+    public static function getMoneyByUserPlan($plan)
     {
         if($plan == 'C' || $plan == 'Z'){
             return 10;

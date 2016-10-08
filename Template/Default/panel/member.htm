@@ -111,7 +111,7 @@
                         2.<a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank">Play Store</a></p>
                     Mac客户端<a href="http://wukongss.com/down/ShadowsocksX-2.6.3.dmg" target="_blank">Mac下载</a>
                     <br>微信交流群:
-                    <br><img width="180" height="180" src="../{RESOURCE}/images/ss_qrcode_0717.jpg">
+                    <br><img width="180" height="180" src="../{RESOURCE}/images/ss_qrcode_0818.jpg">
                 </div>
             </div>
         </div>
@@ -123,7 +123,9 @@
             <div class="chart-label">
                 <div  class="h1 text-purple text-bold">连接信息</div>
                 端口：<code>{$user->port}</code><br />
-                密码：<div id="showpwd" style="display: inline"><b>点击显示密码</b></div><br />
+                密码：<div id="showpwd" style="display: inline"><b>{$user->sspwd}</b></div><br />
+                加密方式：<code>chacha20</code><br />
+                服务器地址：<code><a href="/member/node">点击查看</a></code><br />
                 <button class="btn btn-sm btn-info" id="plan-level">{$user->getPlan()}</button>   &nbsp;
                 <button class="btn btn-sm btn-secondary" id="updatePlan"> 升级套餐 </button>   &nbsp;
                 <button class="btn btn-sm btn-secondary" id="planList"> 套餐详情 </button><br /><br />
@@ -137,11 +139,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         <php>
-            $update = \Helper\Updater::getInstance();
-            $message = $update->check();
-            if($message !== false) {
-                echo "showToastr(\"".$message."\", 0);";
-            }
             $user_json = json_decode($user->forgePwdCode, true);
             if($user_json['verification']!=null && $user->enable == 0) {
                 echo "showToastr(\"您的账户尚未校验邮箱，暂时无法使用本站服务，请校验后重新登陆。\", 0);";

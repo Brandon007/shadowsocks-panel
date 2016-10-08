@@ -123,7 +123,7 @@ class Card
                 } else {
                     $user->expireTime = $user->expireTime + (3600 * 24 * intval($user_test_day)); // 到期时间
                 }
-                $user->transfer = Utils::GB * intval($custom_transfer_level[$user->plan]);
+                $user->transfer += Utils::GB * intval($custom_transfer_level[$user->plan]);
                 $user->flow_down = 0;
                 $user->flow_up = 0;
                 $user->enable = 1;
@@ -143,7 +143,7 @@ class Card
             $record->active_time = time();
             $record->type = $card->type;
             $record->info = $card->info;
-            $record->money = Utils::getMoneyByCardInfo($card->info);
+            $record->money = Utils::getMoneyByUserPlan($user->plan);
             $record->save();
 
             $card->destroy(); // 将此卡片禁止
