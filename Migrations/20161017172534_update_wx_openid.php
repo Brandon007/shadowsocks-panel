@@ -3,7 +3,7 @@
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
-class WxUpdate extends AbstractMigration
+class UpdateWxOpenid extends AbstractMigration
 {
     public function change()
     {
