@@ -28,6 +28,7 @@ class User extends Model
     private $primaryKey = 'uid';// 定义主键
 
     public $uid;// (主键)
+    public $openid;// openid        
     public $email;//电子邮件
     public $nickname;//昵称,没卵用
     protected $password = 'default';//Fuck password
@@ -232,5 +233,13 @@ class User extends Model
         $statement->bindValue(":month", $month*30*86400, DB::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
+    }
+
+    public static function getUserByOpenid($openid)
+    {
+        $statement = DB::getInstance()->prepare('SELECT t1.*, IF(t2.id>0,1,0) as `admin` FROM `member` t1 LEFT JOIN `admin` t2 ON t1.uid=t2.uid WHERE t1.openid = ?');
+        $statement->bindValue(1, $openid);
+        $statement->execute();
+        return $statement->fetchObject(__CLASS__);        
     }
 }
