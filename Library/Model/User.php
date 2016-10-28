@@ -140,12 +140,20 @@ class User extends Model
 
     public static function getUserArrayByExpire()
     {
-        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime OR (flow_up+flow_down)>transfer) AND `enable`=1 ORDER BY uid";
+        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime OR (flow_up+flow_down)>transfer) AND `enable`=1 AND `invite`!='fromWechat' ORDER BY uid";
         $statement = DB::sql($selectSQL);
         $statement->bindValue(":expireTime", time(), DB::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
     }
+    public static function getWechatUserArrayByExpire()
+    {
+        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime OR (flow_up+flow_down)>transfer) AND `enable`=1 AND `invite`='fromWechat' ORDER BY uid";
+        $statement = DB::sql($selectSQL);
+        $statement->bindValue(":expireTime", time(), DB::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
+    }    
 
     public static function enableUsersByExpireTime()
     {
