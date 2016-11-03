@@ -150,19 +150,6 @@ class Card
         }else{
             $cardList = MCard::queryAll();
         }
-        for ($i=0; $i < count($cardList); $i++) { 
-            if($cardList[$i]->type == 0) {
-               $cardList[$i] = "套餐卡";
-            } elseif ($cardList[$i] == 1) {
-                $cardList[$i] = "流量卡";
-            } elseif ($cardList[$i] == 2) {
-                $cardList[$i] = "试用延期卡";
-            } elseif ($cardList[$i] == 3) {
-                $cardList[$i] = "余额卡";
-            } elseif ($cardList[$i] == 4) {
-                $cardList[$i] = "优惠码";
-            }
-        }
         $result['error'] = 0;
         $result['card'] = $cardList;
         return $result;
