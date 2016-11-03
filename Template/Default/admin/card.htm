@@ -235,10 +235,10 @@
             },
             submitHandler: function(form) {
                 $.ajax({
-                    url: "/admin/card/queryByType.json",
+                    url: form.action,
                     method: "POST",
                     dataType: "json",
-                    data: {type:$("#search_type").val()},
+                    data: $(form).serialize(),
                     success: function(result){
                         if(result.code != 200) {
                             showToastr(result.message, 0, 3000, '系统错误');
@@ -246,7 +246,10 @@
                         }
                         if(result.data.error == 0) {
                             changeTable(result.data.card);
+                            $('#modal-6').modal('hide');
                         }
+                        showToastr(result.data.message, 0);
+
                     },
                     error: function(Xhr){
                         showToastr("出现未知错误，请重试", 0);
@@ -268,29 +271,25 @@
 
         });
         $("#card_search_but").on('click', function(){
-            $.ajax({
-                url: form.action,
-                method: "POST",
-                dataType: "json",
-                data: $(form).serialize(),
-                success: function(result){
-                    if(result.code != 200) {
-                        showToastr(result.message, 0, 3000, '系统错误');
-                        return;
+                $.ajax({
+                    url: "/admin/card/queryByType.json",
+                    method: "POST",
+                    dataType: "json",
+                    data: {type:$("#search_type").val()},
+                    success: function(result){
+                        if(result.code != 200) {
+                            showToastr(result.message, 0, 3000, '系统错误');
+                            return;
+                        }
+                        if(result.data.error == 0) {
+                            changeTable(result.data.card);
+                        }
+                    },
+                    error: function(Xhr){
+                        showToastr("出现未知错误，请重试", 0);
                     }
-                    if(result.data.error == 0) {
-                        changeTable(result.data.card);
-                        $('#modal-6').modal('hide');
-                    }
-                    showToastr(result.data.message, 0);
-
-                },
-                error: function(Xhr){
-                    showToastr("出现未知错误，请重试", 0);
-                }
-            });
+                });
         });
-
     });
 
     function cardRemove(cardId) {
