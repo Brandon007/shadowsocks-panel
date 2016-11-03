@@ -379,7 +379,7 @@
                 newData += "<td>#" + data[i].id + "</td>";
                 newData += "<td>"  + data[i].card + "</td>";
                 newData += "<td>" + data[i].add_time + "</td>";
-                newData += "<td>" + data[i].type==0?'套餐卡':data[i].type==1?'流量卡':data[i].type==2?'测试卡':data[i].type==3?'余额卡':data[i].type==4?'优惠码':'未知卡' + "</td>";
+                newData += "<td>" + data[i].type + "</td>";
                 newData += "<td>" + data[i].info + "</td>";
                 if(data[i].type == "0" || data[i].type == "套餐卡") {
                     newData += "<td>" + data[i].expireTime + "</td>";
