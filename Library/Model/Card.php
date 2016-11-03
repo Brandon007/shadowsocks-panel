@@ -78,7 +78,7 @@ class Card extends Model
         return $flag;
     }
 
-    public function disableAllCoupon($type = 4)
+    public static function disableAllCoupon($type = 4)
     {
         $inTransaction = DB::getInstance()->inTransaction();
         if (!$inTransaction) {
