@@ -55,6 +55,14 @@ class Card extends Model
         return $st->fetchObject(__CLASS__);
     }
 
+    public static function queryCardByType($type)
+    {
+        $st = DB::sql("SELECT * FROM card WHERE type=:type ");
+        $st->bindValue(":type", $type, DB::PARAM_INT);
+        $st->execute();
+        return $st->fetchAll(DB::FETCH_CLASS, __CLASS__);
+    }    
+
     public function destroy()
     {
         $inTransaction = DB::getInstance()->inTransaction();
@@ -69,4 +77,19 @@ class Card extends Model
         }
         return $flag;
     }
+
+    public function disableAllCoupon($type = 4)
+    {
+        $inTransaction = DB::getInstance()->inTransaction();
+        if (!$inTransaction) {
+            DB::getInstance()->beginTransaction();
+        }
+        $st = DB::sql("UPDATE card SET status=0 WHERE type=:type"); // 失效卡
+        $st->bindValue(":type", $type, DB::PARAM_INT);
+        $flag = $st->execute();
+        if (!$inTransaction) {
+            DB::getInstance()->commit();
+        }
+        return $flag;
+    }    
 }

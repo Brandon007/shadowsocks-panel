@@ -21,7 +21,10 @@
 
                     <div class="panel-heading">
                         <h3 class="panel-title"></h3>
-
+                        <div class="dataTables_filter" style="font-weight: normal;float: left;">
+                            <label >&nbsp;&nbsp;类型:<input type="text" name="queryType" id="search_type" class="form-control input-sm" placeholder="1,2,3,4">&nbsp;&nbsp;</label>
+                            <button class="btn btn-info btn-sm" style="margin-bottom: 0;margin-left: 10px;" id="card_search_but">查询</button>
+                        </div>
                         <div class="panel-options">
                             <a href="javascript:;" id="card-add"><span>+</span></a>
                             <a href="/admin/card/export" title="导出到Excel.." target="_blank"><i class="fa-file-excel-o"></i></a>
@@ -50,7 +53,7 @@
                                             <td>#{$card->id}</td>
                                             <td>{$card->card}</td>
                                             <td>{(date("Y-m-d H:i:s", $card->add_time))}</td>
-                                            <td><if condition="$card->type == 0">套餐卡<elseif condition="$card->type == 1">流量卡<elseif condition="$card->type == 2">试用延期卡<elseif condition="$card->type == 3">余额卡<else>通用卡</if></td>
+                                            <td><if condition="$card->type == 0">套餐卡<elseif condition="$card->type == 1">流量卡<elseif condition="$card->type == 2">试用延期卡<elseif condition="$card->type == 3">余额卡<elseif condition="$card->type == 4">优惠码<else>通用卡</if></td>
                                             <td>{$card->info}</td>
                                             <td>
                                                 <if condition="$card->type == 0">{$card->expireTime}
@@ -232,10 +235,10 @@
             },
             submitHandler: function(form) {
                 $.ajax({
-                    url: form.action,
+                    url: "/admin/card/queryByType.json",
                     method: "POST",
                     dataType: "json",
-                    data: $(form).serialize(),
+                    data: {type:$("#search_type").val()},
                     success: function(result){
                         if(result.code != 200) {
                             showToastr(result.message, 0, 3000, '系统错误');
@@ -243,10 +246,7 @@
                         }
                         if(result.data.error == 0) {
                             changeTable(result.data.card);
-                            $('#modal-6').modal('hide');
                         }
-                        showToastr(result.data.message, 0);
-
                     },
                     error: function(Xhr){
                         showToastr("出现未知错误，请重试", 0);
@@ -267,6 +267,30 @@
             reset(true);
 
         });
+        $("#card_search_but").on('click', function(){
+            $.ajax({
+                url: form.action,
+                method: "POST",
+                dataType: "json",
+                data: $(form).serialize(),
+                success: function(result){
+                    if(result.code != 200) {
+                        showToastr(result.message, 0, 3000, '系统错误');
+                        return;
+                    }
+                    if(result.data.error == 0) {
+                        changeTable(result.data.card);
+                        $('#modal-6').modal('hide');
+                    }
+                    showToastr(result.data.message, 0);
+
+                },
+                error: function(Xhr){
+                    showToastr("出现未知错误，请重试", 0);
+                }
+            });
+        });
+
     });
 
     function cardRemove(cardId) {

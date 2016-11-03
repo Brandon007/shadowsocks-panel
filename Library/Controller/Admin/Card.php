@@ -115,7 +115,7 @@ class Card
             return $result;
         }else{////新增优惠码
             $cardList = array();
-
+            Mcard::disableAllCoupon(4);////新增前,先把原有优惠码失效
             $cardStr = htmlspecialchars(trim($_POST['card_no']));
             $card = new MCard();
             $card->add_time = time();
@@ -135,6 +135,24 @@ class Card
             $result['card'] = $cardList;
             return $result;
         }
+    }
+
+    /**
+     * 按类型查询卡
+     * @JSON
+     */
+    public function queryByType()
+    {
+        $cardList = array();
+        $type = trim($_POST['type']);
+        if (is_numeric($type)) {
+            $cardList = MCard::queryCardByType($type);
+        }else{
+            $cardList = MCard::queryAll();
+        }
+        $result['error'] = 0;
+        $result['card'] = $cardList;
+        return $result;
     }
 
     /**
