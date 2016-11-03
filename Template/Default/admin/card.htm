@@ -286,6 +286,7 @@
                         }
                         if(result.data.error == 0) {
                             $("table tbody").empty();
+                             $("table tbody").append('<tr><th>#</th><th>卡号</th><th>添加时间</th><th>类型</th><th>参数</th><th>有效时间</th>                          <th>状态</th><th width="150px">操作</th></tr>');
                             changeTable(result.data.card);
                         }
                     },
