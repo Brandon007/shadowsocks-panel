@@ -22,8 +22,11 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"></h3>
                         <div class="dataTables_filter" style="font-weight: normal;float: left;">
-                            <label >&nbsp;&nbsp;类型:<input type="text" name="queryType" id="search_type" class="form-control input-sm" placeholder="1,2,3,4">&nbsp;&nbsp;</label>
-                            <button class="btn btn-info btn-sm" style="margin-bottom: 0;margin-left: 10px;" id="card_search_but">查询</button>
+                            <div>
+                                <div style="float:left"><input type="text" name="queryType" id="search_type" class="form-control input-sm" placeholder="1,2,3,4"></div>
+                                <button class="btn btn-info btn-sm" style="margin-bottom: 0;margin-left: 10px;float:right" id="card_search_but">查询</button>
+                                <div style="clear:both"></div>
+                            </div>
                         </div>
                         <div class="panel-options">
                             <a href="javascript:;" id="card-add"><span>+</span></a>
@@ -282,6 +285,7 @@
                             return;
                         }
                         if(result.data.error == 0) {
+                            $("table tbody").empty();
                             changeTable(result.data.card);
                         }
                     },
