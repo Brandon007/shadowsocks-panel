@@ -134,6 +134,10 @@ class Card
                 $user->money += intval($card->info);
                 $user->save();
                 $result['message'] = '余额充值成功，您当前余额为 ' . $user->money . ' 元';
+            } elseif ($card->type == 4) {
+                ////优惠码
+                $result['message'] = '骚年,优惠码只能在公众号使用:-(';
+                return $result;
             }
             // 保存充值记录
             $record = new Record();
