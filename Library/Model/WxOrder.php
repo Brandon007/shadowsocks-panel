@@ -23,7 +23,7 @@ class WxOrder extends Model
     public $status;//0-未支付 1-已支付
     public $remark;
 
-    public static function queryAll()
+    public function queryAll()
     {
         $sql = 'SELECT * FROM wxorder ';
         $sql .= ' ORDER BY pay_time desc';
@@ -32,7 +32,7 @@ class WxOrder extends Model
         return $st->fetchAll(DB::FETCH_CLASS, __CLASS__);
     }
 
-    public static function queryByTradeNum($num)
+    public function queryByTradeNum($num)
     {
         $st = DB::sql("SELECT * FROM wxorder WHERE out_trade_no=:num");
         $st->bindValue(":num", $num, DB::PARAM_STR);
