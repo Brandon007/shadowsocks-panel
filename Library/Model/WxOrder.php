@@ -25,7 +25,7 @@ class WxOrder extends Model
 
     public static function queryAll()
     {
-        $sql = 'SELECT * FROM WxOrder ';
+        $sql = 'SELECT * FROM wxorder ';
         $sql .= ' ORDER BY pay_time desc';
         $st = DB::sql($sql);
         $st->execute();
@@ -34,7 +34,7 @@ class WxOrder extends Model
 
     public static function queryByTradeNum($num)
     {
-        $st = DB::sql("SELECT * FROM order WHERE out_trade_no=:num");
+        $st = DB::sql("SELECT * FROM wxorder WHERE out_trade_no=:num");
         $st->bindValue(":num", $num, DB::PARAM_STR);
         $st->execute();
         return $st->fetchObject(__CLASS__);
