@@ -137,6 +137,16 @@ class Utils
     }
 
     /**
+     * 账户类型显示自定义名称
+     *
+     * @param $plan
+     * @return string
+     */
+    public static function wxPlanAutoShow($type)
+    {
+        return $type==0?'周卡':$type==1?'月卡':$type==2?'季卡':'年卡';
+    }
+    /**
      * 计划任务显示状态
      *
      * @param $enabled

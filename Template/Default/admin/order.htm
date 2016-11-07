@@ -1,0 +1,73 @@
+<import template="/admin/_header"/>
+<import template="/admin/_content"/>
+
+<div class="page-title">
+    <div class="title-env">
+        <h1 class="title">充值管理</h1>
+        <p class="description">充值记录列表！</p>
+    </div>
+    <div class="breadcrumb-env">
+        <ol class="breadcrumb bc-1">
+            <li><a href="/admin"><i class="fa-home"></i>管理端</a></li>
+            <li><a href="/admin/order">充值记录</a></li>
+        </ol>
+    </div>
+</div>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title"></h3>
+
+                        <div class="panel-options">
+                            <a href="/admin/order/export" title="导出到Excel.." target="_blank"><i class="fa-file-excel-o"></i></a>
+                            <a href="javascript:;" data-toggle="reload">
+                                <i class="fa-rotate-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-small-font table-bordered table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>openid</th>
+                                    <th>金额(单位:分)</th>
+                                    <th>支付时间</th>
+                                    <th>套餐</th>
+                                    <th>状态</th>
+                                    <th>备注</th>
+                                </tr>
+                                <if condition="count($orderList) > 0">
+                                    <loop variable="$orderList" key="$key" value="$record">
+                                        <tr id="record-{$record->id}">
+                                            <td>#{$record->openid}</td>
+                                            <td>{$record->money}</td>
+                                            <td>{(date("Y-m-d H:i:s", $record->pay_time))}</td>
+                                            <td>{$record->type}</td>
+                                            <td>{(\Helper\Utils::wxPlanAutoShow($record->type))}</td>
+                                            <td>{$record->remark}</td>
+                                        </tr>
+                                    </loop>
+                                    <else>
+                                        <tr id="record-0">
+                                            <td>#</td>
+                                            <td colspan="5">没有充值记录</td>
+                                        </tr>
+                                </if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+</div>
+</div>
+
+<import template="/admin/_footer"/>
