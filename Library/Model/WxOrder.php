@@ -15,6 +15,7 @@ class WxOrder extends Model
 {
 
     public $id; // 主键
+    public $out_trade_no; //自定义订单号
     public $openid; // 充值用户openid
     public $money; // 金额(单位:分)
     public $pay_time;
@@ -31,4 +32,11 @@ class WxOrder extends Model
         return $st->fetchAll(DB::FETCH_CLASS, __CLASS__);
     }
 
+    public static function queryByTradeNum($num)
+    {
+        $st = DB::sql("SELECT * FROM order WHERE out_trade_no=:num");
+        $st->bindValue(":num", $num, DB::PARAM_STR);
+        $st->execute();
+        return $st->fetchObject(__CLASS__);
+    }
 }

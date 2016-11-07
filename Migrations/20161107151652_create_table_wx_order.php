@@ -8,6 +8,7 @@ class CreateTableWxOrder extends AbstractMigration
     public function change()
     {
         $this->table("wxorder")
+            ->addColumn('out_trade_no', 'string', ['limit' => 28,'null' => false])
             ->addColumn('openid', 'integer', ['limit' => 32,'null' => false])
             ->addColumn('money', 'integer', ['limit' => 5, 'comment'=> '单位:分'])
             ->addColumn('pay_time', 'integer', ['null' => false])
