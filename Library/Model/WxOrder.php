@@ -23,7 +23,7 @@ class WxOrder extends Model
     public $status;//0-未支付 1-已支付
     public $remark;
 
-    public function queryAll()
+    public static function queryAll()
     {
         $sql = 'SELECT * FROM wxorder ';
         $sql .= ' ORDER BY pay_time desc';
