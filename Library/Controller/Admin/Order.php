@@ -17,14 +17,14 @@ use Model\WxOrder;
  * @Authorization
  * @package Controller\Admin
  */
-class Wxorder
+class Order
 {
 
     public function index()
     {
         $data['orderList'] = WxOrder::queryAll();
         Template::setContext($data);
-        Template::setView('admin/wxorder');
+        Template::setView('admin/order');
     }
 
     /**
