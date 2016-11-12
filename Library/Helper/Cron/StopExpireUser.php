@@ -17,6 +17,7 @@ use Helper\Utils;
 use Model\Mail;
 use Model\User;
 
+use wukongss\cfg;
 /**
  * 计划任务 - StopExpireUser
  * 自动停止 超流量/使用时间到期 用户
