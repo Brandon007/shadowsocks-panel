@@ -35,7 +35,7 @@ class StopExpireUser implements ICron
         // 'aes_key' => null, // 可选
         'log' => [
             'level' => 'debug',
-            'file'  => '/home/wwwlogs/wechat.log', // XXX: 绝对路径！！！！
+            'file'  => '/home/wwwlogs/wechat.log' // XXX: 绝对路径！！！！
         ]
         //...
     ];
