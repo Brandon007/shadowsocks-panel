@@ -8,6 +8,7 @@
 namespace Helper\Cron;
 include_once  '/home/wwwroot/shadowsocks-panel/Package/autoload.php'; // 引入 composer 入口文件
 use Contactable\ICron;
+use EasyWeChat\Foundation\Application;
 
 use Helper\Logger;
 use Helper\Mailer;
