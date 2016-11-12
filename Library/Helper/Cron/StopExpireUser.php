@@ -7,7 +7,6 @@
 
 namespace Helper\Cron;
 include_once  '/home/wwwroot/shadowsocks-panel/Package/autoload.php'; // 引入 composer 入口文件
-include_once  '/home/wwwroot/wukongss/cfg.php';
 use Contactable\ICron;
 
 use Helper\Logger;
@@ -17,7 +16,6 @@ use Helper\Utils;
 use Model\Mail;
 use Model\User;
 
-use wukongss\cfg;
 /**
  * 计划任务 - StopExpireUser
  * 自动停止 超流量/使用时间到期 用户
@@ -27,11 +25,11 @@ use wukongss\cfg;
 class StopExpireUser implements ICron
 {
     const STEP = 300; // 5分钟执行一次
-    private $options = [
+    $options = [
         'debug'  => true,
-        'app_id' => $cfg["appid"],
-        'secret' => $cfg["secret"],
-        'token'  => $cfg["token"],
+        'app_id' => 'wx15bfb1691cf3c4b8',
+        'secret' => '6257d7590838302979be2acc9c653c65',
+        'token'  => 'wukongss',
         // 'aes_key' => null, // 可选
         'log' => [
             'level' => 'debug',
@@ -40,7 +38,7 @@ class StopExpireUser implements ICron
         //...
     ];
 
-    private $app = new Application($options);
+    $app = new Application($options);
     public function run()
     {
         $users = User::getUserArrayByExpire();
