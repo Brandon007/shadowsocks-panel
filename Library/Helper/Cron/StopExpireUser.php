@@ -25,7 +25,7 @@ use Model\User;
 class StopExpireUser implements ICron
 {
     const STEP = 300; // 5分钟执行一次
-    $options = [
+    private $options = [
         'debug'  => true,
         'app_id' => 'wx15bfb1691cf3c4b8',
         'secret' => '6257d7590838302979be2acc9c653c65',
@@ -38,7 +38,7 @@ class StopExpireUser implements ICron
         //...
     ];
 
-    $app = new Application($options);
+    private $app = new Application($this->options);
     public function run()
     {
         $users = User::getUserArrayByExpire();
@@ -82,7 +82,7 @@ class StopExpireUser implements ICron
 
 
         foreach ($wechatUsers as $wechatUser) {
-            sendTemplateMsg($app,$wechatUser->openid);
+            sendTemplateMsg($this->app,$wechatUser->openid);
             $wechatUser->stop();
         }
     }
