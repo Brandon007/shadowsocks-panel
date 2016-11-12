@@ -38,14 +38,13 @@ class StopExpireUser implements ICron
         //...
     ];
 
-    private $app = new Application($this->options);
     public function run()
     {
         $users = User::getUserArrayByExpire();
         $wechatUsers = User::getWechatUserArrayByExpire();
         $notificationMail = Option::get('mail_stop_expire_notification');
         $mailContentTemplate = Option::get('custom_mail_stop_expire_content');
-
+        $app = new Application($this->options);
         if (!$notificationMail) {
             Option::set('mail_stop_expire_notification', 0); // 设置邮件提醒的系统参数
         }
@@ -82,7 +81,7 @@ class StopExpireUser implements ICron
 
 
         foreach ($wechatUsers as $wechatUser) {
-            sendTemplateMsg($this->app,$wechatUser->openid);
+            sendTemplateMsg($app,$wechatUser->openid);
             $wechatUser->stop();
         }
     }
