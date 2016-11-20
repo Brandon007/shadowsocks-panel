@@ -82,7 +82,7 @@ class StopExpireUser implements ICron
 
 
         foreach ($wechatUsers as $wechatUser) {
-            $this->sendTemplateMsg($app,$wechatUser->openid);
+            $this->sendTemplateMsg($app,$wechatUser);
             $wechatUser->stop();
         }
     }
@@ -92,14 +92,14 @@ class StopExpireUser implements ICron
         return time() + self::STEP;
     }
 
-    public function sendTemplateMsg($app,$openid){
-        $userId = $openid;
+    public function sendTemplateMsg($app,$user){
+        $userId = $user->openid;
         $templateId = 'OtmnvVvHqBH9eUCC5-KkXV-QPVNDWkgpArvOlUbco04';
-        $url = 'http://wx.wukongss.com/bind.php';
+        $url = 'http://wx.wukongss.com/order.php';
         $data = array(
-            "first"    => array("加速服务到期！", '#555555'),
-            "keyword1" => array("高级套餐", "#336699"),
-            "keyword2" => array("2014-10-10 ", "#FF0000"),
+            "first"    => array("加速服务到期！", '#000000'),
+            "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
+            "keyword2" => array(date('Y-m-d 00:00:00', $user->expireTime), "#FF0000"),
             "remark"   => array("欢迎再次购买！", "#5599FF"),
         );
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
