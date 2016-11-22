@@ -41,6 +41,8 @@ class User extends Model
     public $enable = 1;//是否启用SS 0不启用 1启用
     public $money = 0;//狗屁用都没的 $
     public $invite = '';//注册所用的邀请码
+    public $coupon;//优惠码
+    public $credit =0;//积分
     public $invite_num = 0;//用户拥有的邀请码
     public $regDateLine = 0;//注册时间
     public $lastConnTime = 0;//上次使用时间
