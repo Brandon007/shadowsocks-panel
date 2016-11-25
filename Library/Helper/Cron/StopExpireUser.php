@@ -95,7 +95,7 @@ class StopExpireUser implements ICron
     public function sendTemplateMsg($app,$user){
         $userId = $user->openid;
         $templateId = 'OtmnvVvHqBH9eUCC5-KkXV-QPVNDWkgpArvOlUbco04';
-        $url = 'http://wx.wukongss.com/order.php';
+        $url = 'https://wx.wukongss.com/order.php';
         $data = array(
             "first"    => array("加速服务到期！", '#000000'),
             "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
