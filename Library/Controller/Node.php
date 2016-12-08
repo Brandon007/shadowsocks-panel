@@ -50,9 +50,9 @@ class Node
 
     private static function nodeDetail($server, $server_port, $password, $method, $name)
     {
-        $ssurl = 'salsa20' . ":" . 'XDPDnYXA' . "@" . '127.0.0.1' . ":" . '12948';
+        $ssurl = $method . ":" . $password . "@" . $server . ":" . $server_port;
         $ssurl = "ss://" . base64_encode($ssurl);
-        $ssjsonAry = array("server" => '127.0.0.1', "server_port" => '12948', "password" => 'XDPDnYXA', "timeout" => 600, "method" => 'salsa20', "remarks" => 'kcp');
+        $ssjsonAry = array("server" => $server, "server_port" => $server_port, "password" => $password, "timeout" => 600, "method" => $method, "remarks" => $name);
         $ssjson = json_encode($ssjsonAry, JSON_PRETTY_PRINT);
         return array("ssurl" => $ssurl, "ssjson" => $ssjson);
     }
