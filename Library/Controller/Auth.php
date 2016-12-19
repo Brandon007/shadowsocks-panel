@@ -419,7 +419,7 @@ EOF;
             $mail->to = $user->email;
             $mail->subject = "[" . SITE_NAME . "] Password Recovery";
             $mail->content = $content;
-            $mailer->toQueue(true); // 添加到邮件列队
+            $mailer->toQueue(false); // 不添加到邮件列队
             $isOk = $mailer->send($mail);
 
             $user->save();
@@ -468,7 +468,7 @@ EOF;
                     $mail->to = $user->email;
                     $mail->subject = "[" . SITE_NAME . "] Your new Password";
                     $mail->content = $content;
-                    $mailer->toQueue(true); // 添加到邮件列队
+                    $mailer->toQueue(false); // 不添加到邮件列队
                     $isOk = $mailer->send($mail);
                     if ($isOk) {
                         $result['message'] = '新密码已经发送到该账户邮件地址，请注意查收!<br/> 并且请在登录后修改密码！';
