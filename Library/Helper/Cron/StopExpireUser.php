@@ -82,8 +82,10 @@ class StopExpireUser implements ICron
 
 
         // foreach ($wechatUsers as $wechatUser) {
-        //     $this->sendTemplateMsg($app,$wechatUser);
         //     $wechatUser->stop();
+        //     if ($wechatUser->subscribe == 1) {
+        //         $this->sendTemplateMsg($app,$wechatUser);
+        //     }
         // }
     }
 
