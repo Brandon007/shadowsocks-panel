@@ -39,6 +39,7 @@ class User extends Model
     public $transfer;//总流量
     public $plan = 'A';//账户类型
     public $enable = 1;//是否启用SS 0不启用 1启用
+    public $subscribe = 0;//是否关注微信 0取关 1关注
     public $money = 0;//狗屁用都没的 $
     public $invite = '';//注册所用的邀请码
     public $coupon;//优惠码
@@ -150,7 +151,7 @@ class User extends Model
     }
     public static function getWechatUserArrayByExpire()
     {
-        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime OR (flow_up+flow_down)>transfer) AND `enable`=1 AND `invite`='fromWechat' ORDER BY uid";
+        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime) AND `enable`=1 AND `subscribe`=1 AND `invite`='fromWechat' ORDER BY uid";
         $statement = DB::sql($selectSQL);
         $statement->bindValue(":expireTime", time(), DB::PARAM_INT);
         $statement->execute();
@@ -159,7 +160,7 @@ class User extends Model
 
     public static function getWechatUserArrayByExpireDaysIn($days)
     {
-        $selectSQL = "SELECT * FROM member WHERE (expireTime<:expireTime AND `enable`=1 AND `invite`='fromWechat' ORDER BY uid";
+        $selectSQL = "SELECT * FROM member WHERE expireTime<:expireTime AND `enable`=1 AND `subscribe`=1 AND `invite`='fromWechat' ORDER BY uid";
         $statement = DB::sql($selectSQL);
         $statement->bindValue(":expireTime", time()+60*60*24*$days, DB::PARAM_INT);
         $statement->execute();
