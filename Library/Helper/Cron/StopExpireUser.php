@@ -59,7 +59,7 @@ class StopExpireUser implements ICron
             if ($notificationMail) {
                 $mail = new Mail();
                 $mail->to = $user->email;
-                $mail->subject = '[' . SITE_NAME . '] ' . "用户 {$user->nickname}，您的账户由于到期或流量超用已被暂停服务";
+                $mail->subject = '[' . SITE_NAME . '] ' . "用户 {$user->nickname}，您的账户由于到期或流量超用已被暂停服务,如需继续使用,请关注微信公众号:悟空加速";
                 $params = [
                     'nickname' => $user->nickname,
                     'email' => $user->email,
