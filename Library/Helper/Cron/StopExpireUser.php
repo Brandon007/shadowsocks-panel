@@ -81,12 +81,12 @@ class StopExpireUser implements ICron
         // User::enableUsersByExpireTime(); // 启用已续费且流量未超过的用户
 
 
-        // foreach ($wechatUsers as $wechatUser) {
-        //     $wechatUser->stop();
-        //     if ($wechatUser->subscribe == 1) {
-        //         $this->sendTemplateMsg($app,$wechatUser);
-        //     }
-        // }
+        foreach ($wechatUsers as $wechatUser) {
+            $wechatUser->stop();
+            if ($wechatUser->subscribe == 1) {
+                $this->sendTemplateMsg($app,$wechatUser);
+            }
+        }
     }
 
     public function getStep()
