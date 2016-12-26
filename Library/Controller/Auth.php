@@ -53,6 +53,11 @@ class Auth
 
                 if ($user) {
                     if ($user->verifyPassword($passwd)) {
+                        if ($user->uid != 1) {
+                            $result['error'] = 1;
+                            $result['message'] = '已转微信经营,网站不再提供登录,微信包含所有功能,更加方便哦!';
+                            return $result;
+                        }
                         $result['error'] = 0;
                         $result['message'] = '登录成功,即将跳转到 &gt;仪表盘';
 
