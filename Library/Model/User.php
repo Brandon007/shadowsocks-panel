@@ -123,7 +123,7 @@ class User extends Model
 
     public static function getUserByPort($port)
     {
-        $statement = DB::getInstance()->prepare('SELECT t1.*, IF(t2.id>0,1,0) as `admin` FROM `member` t1 LEFT JOIN `admin` t2 ON t1.uid=t2.uid WHERE t1.uid = ?');
+        $statement = DB::getInstance()->prepare('SELECT t1.*, IF(t2.id>0,1,0) as `admin` FROM `member` t1 LEFT JOIN `admin` t2 ON t1.uid=t2.uid WHERE t1.port = ?');
         $statement->bindValue(1, $port, DB::PARAM_INT);
         $statement->execute();
         return $statement->fetchObject(__CLASS__);
