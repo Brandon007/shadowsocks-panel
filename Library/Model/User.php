@@ -164,8 +164,14 @@ class User extends Model
         $statement->bindValue(":expireTime", time(), DB::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
-    } 
-
+    }
+    public static function getWechatUserArrayByOverflow()
+    {
+        $selectSQL = "SELECT * FROM member WHERE (flow_down > 21474836480) AND `enable`=1 AND `invite`='fromWechat' AND `plan`='A' ORDER BY uid";
+        $statement = DB::sql($selectSQL);
+        $statement->execute();
+        return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
+    }     
     public static function getWechatUserArrayByExpireDaysIn($days)
     {
         $selectSQL = "SELECT * FROM member WHERE expireTime<:expireTime AND `enable`=1 AND `invite`='fromWechat' ORDER BY uid";

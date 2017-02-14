@@ -43,6 +43,7 @@ class StopExpireUser implements ICron
     {
         $users = User::getUserArrayByExpire();
         $wechatUsers = User::getWechatUserArrayByExpire();
+        $overflowUsers = User::getWechatUserArrayByOverflow();
         $notificationMail = Option::get('mail_stop_expire_notification');
         $mailContentTemplate = Option::get('custom_mail_stop_expire_content');
         $app = new Application($this->options);
@@ -87,6 +88,12 @@ class StopExpireUser implements ICron
                 $this->sendTemplateMsg($app,$wechatUser);
             }
         }
+        foreach ($overflowUsers as $oUser) {
+            $oUser->expireTime = time();
+            $oUser->enable = 0;
+            $oUser->save();
+            }
+        }        
     }
 
     public function getStep()
@@ -107,4 +114,18 @@ class StopExpireUser implements ICron
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
         var_dump($result);        
     }
+    /**用完额度流量的免费用户**/
+    public function sendOverflowTemplateMsg($app,$user){
+        $userId = $user->openid;
+        $templateId = 'OtmnvVvHqBH9eUCC5-KkXV-QPVNDWkgpArvOlUbco04';
+        $url = 'https://wx.wukongss.com/order.php';
+        $data = array(
+            "first"    => array("已用完免费额度20G,暂停使用", '#000000'),
+            "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
+            "keyword2" => array(date('Y-m-d 00:00:00', $user->expireTime), "#FF0000"),
+            "remark"   => array("如需继续使用,欢迎购买套餐", "#5599FF"),
+        );
+        $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
+        var_dump($result);        
+    }    
 }
