@@ -92,6 +92,8 @@ class StopExpireUser implements ICron
             $oUser->expireTime = time();
             $oUser->enable = 0;
             $oUser->save();
+            if ($oUser->subscribe == 1) {
+                $this->sendOverflowTemplateMsg($app,$oUser);
             }
         }        
     }
