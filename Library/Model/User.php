@@ -167,7 +167,7 @@ class User extends Model
     }
     public static function getWechatUserArrayByOverflow()
     {
-        $selectSQL = "SELECT * FROM member WHERE (flow_down > 21474836480) AND `enable`=1 AND `invite`='fromWechat' AND `plan`='A' ORDER BY uid";
+        $selectSQL = "SELECT * FROM member WHERE (flow_down > 21474836480) AND `enable`=1 AND `invite`='fromWechat' AND (`plan`='A' OR `plan`='Z') ORDER BY uid";
         $statement = DB::sql($selectSQL);
         $statement->execute();
         return $statement->fetchAll(DB::FETCH_CLASS, __CLASS__);
