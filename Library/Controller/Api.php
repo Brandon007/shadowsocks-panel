@@ -14,6 +14,7 @@ use Helper\Option;
 use Helper\Utils;
 use Model\Card;
 use Model\Node;
+use Model\User;
 
 class Api
 {
@@ -161,9 +162,9 @@ class Api
                 $servers[] = $node->server;
             }
         } catch (Exception $e) {
-            return array("statusCode" => 0, "servers" => $servers, "msg" => 'get nodes list fail!');
+            return array("statusCode" => 1, "servers" => $servers, "msg" => 'get nodes list fail!');
         }
-        return array("statusCode" => 1, "servers" => $servers,"msg" => 'success');
+        return array("statusCode" => 0, "servers" => $servers,"msg" => 'success');
     }
     /**
      * @JSON
