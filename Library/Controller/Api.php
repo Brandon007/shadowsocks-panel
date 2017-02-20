@@ -147,4 +147,18 @@ class Api
         }
         return $status;
     }
+
+    /**
+     * @JSON
+     */
+    public function nodes() {
+        $status = 0;
+        $nodes = null;
+        try {
+            $nodes = Node::getNodeArray(0);//普通节点
+        } catch (Exception $e) {
+            return return array("status" => 0, "data" => $nodes);
+        }
+        return array("status" => 1, "data" => $nodes);
+    }
 }
