@@ -161,9 +161,9 @@ class Api
                 $servers[] = $node->server;
             }
         } catch (Exception $e) {
-            return array("statusCode" => 0, "servers" => $servers);
+            return array("statusCode" => 0, "servers" => $servers, "msg" => 'get nodes list fail!');
         }
-        return array("statusCode" => 1, "servers" => $servers);
+        return array("statusCode" => 1, "servers" => $servers,"msg" => 'success');
     }
     /**
      * @JSON
