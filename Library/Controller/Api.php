@@ -154,7 +154,7 @@ class Api
     public function nodes() {
         $status = 0;
         $nodes = null;
-        $servers = ArrayListay();   
+        $servers = array();   
         try {
             $nodes = Node::getNodeArray(0);//普通节点
             foreach ($nodes as $node) {
