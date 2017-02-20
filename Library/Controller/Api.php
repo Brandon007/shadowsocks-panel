@@ -152,7 +152,6 @@ class Api
      * @JSON
      */
     public function nodes() {
-        $status = 0;
         $nodes = null;
         $servers = array();   
         try {
@@ -161,8 +160,18 @@ class Api
                 $servers[] = $node->server;
             }
         } catch (Exception $e) {
-            return array("status" => 0, "data" => $servers);
         }
-        return array("status" => 1, "data" => $servers);
     }
+    /**
+     * @JSON
+     */
+    public function appLogin() {
+        $port = $_POST['port'];
+        $password = $_POST['password'];
+        $user = User::getUserByPort();
+        if (!isset($port) || !isset($password)) {
+        }
+        if ($user && $user->sspwd ==md5($password)) {//
+        }
+    }    
 }
