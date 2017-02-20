@@ -152,6 +152,7 @@ class Api
      * @JSON
      */
     public function nodes() {
+        $status = 0;
         $nodes = null;
         $servers = array();   
         try {
@@ -160,7 +161,9 @@ class Api
                 $servers[] = $node->server;
             }
         } catch (Exception $e) {
+            return array("code" => 0, "data" => $servers);
         }
+        return array("code" => 1, "data" => $servers);
     }
     /**
      * @JSON
@@ -170,8 +173,11 @@ class Api
         $password = $_POST['password'];
         $user = User::getUserByPort();
         if (!isset($port) || !isset($password)) {
+            return array("code" => 2, "success"=>0, "data" => 'port or psw must not be empty!');
         }
         if ($user && $user->sspwd ==md5($password)) {//
+            return array("code" => 0, "success"=>1, "data" => 'success');
         }
+        return array("code" => 1, "success"=>0, "data" => 'user not found');
     }    
 }
