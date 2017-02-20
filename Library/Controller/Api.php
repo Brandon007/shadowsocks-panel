@@ -172,10 +172,11 @@ class Api
     public function appLogin() {
         $port = $_POST['port'];
         $password = $_POST['password'];
-        $user = User::getUserByPort();
+        
         if (!isset($port) || !isset($password)) {
             return array("statusCode" => 2, "success"=>0, "msg" => 'port or psw must not be empty!');
         }
+        $user = User::getUserByPort($port);
         if ($user && $user->sspwd ==md5($password)) {//
             return array("statusCode" => 0, "success"=>1, "msg" => 'success');
         }
