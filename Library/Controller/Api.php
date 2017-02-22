@@ -170,10 +170,10 @@ class Api
      * @JSON
      */
     public function appLogin() {
-        $port = $_POST['port'];
-        $password = $_POST['password'];
+        $port = $_GET['port'];
+        $password = $_GET['password'];
         
-        if (empty($port) || empty($password)) {// isset then
+        if (!empty($port) && !empty($password)) {// isset then
             $user = User::getUserByPort($port);
             if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
                 return array("statusCode" => 0, "success"=>1, "msg" => 'success');
