@@ -175,7 +175,7 @@ class Api
         
         if (empty($port) || empty($password)) {// isset then
             $user = User::getUserByPort($port);
-            if (!empty($user) && $password==md5($user->sspwd)) {//
+            if (!empty($user) && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
                 return array("statusCode" => 0, "success"=>1, "msg" => 'success');
             }
             return array("statusCode" => 1, "success"=>0, "msg" => 'password incorrect');           
