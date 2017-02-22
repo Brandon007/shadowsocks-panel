@@ -170,8 +170,8 @@ class Api
      * @JSON
      */
     public function appLogin() {
-        $port = $_GET['port'];
-        $password = $_GET['password'];
+        $port = $_POST['port'];
+        $password = $_POST['password'];
         
         if (!empty($port) && !empty($password)) {// isset then
             $user = User::getUserByPort($port);
