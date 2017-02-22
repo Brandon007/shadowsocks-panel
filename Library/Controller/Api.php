@@ -173,7 +173,7 @@ class Api
         $port = $_POST['port'];
         $password = $_POST['password'];
         
-        if (isset($port) && isset($password)) {// isset then
+        if (empty($port) || empty($password)) {// isset then
             $user = User::getUserByPort($port);
             if ($user && $user->sspwd ==md5($password)) {//
                 return array("statusCode" => 0, "success"=>1, "msg" => 'success');
