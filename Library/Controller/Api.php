@@ -164,7 +164,7 @@ class Api
             throw new Error("get nodes list fail!", 6001);
             
         }        
-        return array("statusCode" => 6000, "data" => $servers,"message" => 'success');
+        return array("statusCode" => 6000, "output" => $servers,"message" => 'success');
     }
     /**
      * @JSON
@@ -177,7 +177,7 @@ class Api
         }
         $user = User::getUserByPort($port);
         if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
-            return array("statusCode" => 8000, "data"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
+            return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
         }else{
             throw new Error('password incorrect', 8001); 
         }

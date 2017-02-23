@@ -46,7 +46,7 @@ class JSON implements IFilter
              else {
                 $this->outputJson(array(
                     'code' => $context['statusCode'] ? $context['statusCode'] : self::$statusCode,
-                    'data' => $context['data'] ? ($context['data']=='noOutput' ? null : $context['data']) : $context,////为兼容
+                    'data' => $context['output'] ? ($context['output']=='noOutput' ? null : $context['output']) : $context,////为兼容
                     'message'  =>$context['message'] ? $context['message'] : ''
                 ));
             }
