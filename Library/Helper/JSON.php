@@ -44,7 +44,8 @@ class JSON implements IFilter
                     'target' => $context['link']
                 ));
             } elseif (Template::getView() == 'Misc/ApiError') {
-                    $error = $context['instance'];
+                $error = $context['instance'];
+                $this->outputJson(array(
                     'code' => $error->getCode() ? $error->getCode() : 9999,
                     'data' => null,
                     'message'  =>$context['message']
