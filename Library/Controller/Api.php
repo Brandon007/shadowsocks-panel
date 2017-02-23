@@ -9,7 +9,6 @@
 namespace Controller;
 
 use Core\Error;
-use Core\ApiError;
 use Helper\Http;
 use Helper\Option;
 use Helper\Utils;
@@ -162,7 +161,7 @@ class Api
             $servers[] = $node->server;
         }
         if (empty($nodes)) {
-            throw new ApiError("get nodes list fail!", 6001);
+            throw new Error("get nodes list fail!", 6001);
             
         }        
         return array("statusCode" => 6000, "data" => $servers,"message" => 'success');
@@ -174,13 +173,13 @@ class Api
         $port = $_POST['port'];
         $password = $_POST['password'];
         if (empty($port) || empty($password)) {
-            throw new ApiError('port or psw must not be empty!', 8002);
+            throw new Error('port or psw must not be empty!', 8002);
         }
         $user = User::getUserByPort($port);
         if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
             return array("statusCode" => 8000, "data"=>'noOutput', "msg" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
         }else{
-            throw new ApiError('password incorrect', 8001); 
+            throw new Error('password incorrect', 8001); 
         }
     }    
 }

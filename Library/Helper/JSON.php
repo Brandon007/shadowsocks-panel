@@ -32,7 +32,6 @@ class JSON implements IFilter
                 $this->outputJson(array(
                     'code' => $error->getCode() ? $error->getCode() : 500,
                     'data' => null,
-                    'hasError' => true,
                     'message' => $error->getMessage(),
                 ));
             } elseif (Template::getView() == 'Misc/Redirect') {
@@ -42,13 +41,6 @@ class JSON implements IFilter
                     'hasError' => true,
                     'message' => $context['text'] ? $context['text'] : 'JSON request has been redirected',
                     'target' => $context['link']
-                ));
-            } elseif (Template::getView() == 'Misc/ApiError') {
-                $error = $context['instance'];
-                $this->outputJson(array(
-                    'code' => $error->getCode() ? $error->getCode() : 9999,
-                    'data' => null,
-                    'message'  =>$context['message']
                 ));
             }
              else {
