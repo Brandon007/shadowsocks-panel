@@ -43,10 +43,17 @@ class JSON implements IFilter
                     'message' => $context['text'] ? $context['text'] : 'JSON request has been redirected',
                     'target' => $context['link']
                 ));
-            } else {
+            } elseif (Template::getView() == 'Misc/ApiError') {
+                    $error = $context['instance'];
+                    'code' => $error->getCode() ? $error->getCode() : 9999,
+                    'data' => null,
+                    'message'  =>$context['message']
+            }
+             else {
                 $this->outputJson(array(
-                    'code' => self::$statusCode,
-                    'data' => $context,
+                    'code' => $context['statusCode'] ? $context['statusCode'] : self::$statusCode,
+                    'data' => $context['data'] ? ($context['data']=='noOutput' ? null : $context['data']) : $context,////为兼容
+                    'message'  =>$context['message'] ? $context['message'] : ''
                 ));
             }
         }

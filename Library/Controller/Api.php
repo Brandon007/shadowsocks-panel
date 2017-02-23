@@ -9,6 +9,7 @@
 namespace Controller;
 
 use Core\Error;
+use Core\ApiError;
 use Helper\Http;
 use Helper\Option;
 use Helper\Utils;
@@ -156,15 +157,15 @@ class Api
         $status = 0;
         $nodes = null;
         $servers = array();   
-        try {
-            $nodes = Node::getNodeArray(0);//普通节点
-            foreach ($nodes as $node) {
-                $servers[] = $node->server;
-            }
-        } catch (Exception $e) {
-            return array("statusCode" => 1, "servers" => $servers, "msg" => 'get nodes list fail!');
+        $nodes = Node::getNodeArray(0);//普通节点
+        foreach ($nodes as $node) {
+            $servers[] = $node->server;
         }
-        return array("statusCode" => 0, "servers" => $servers,"msg" => 'success');
+        if (empty($nodes)) {
+            throw new ApiError("get nodes list fail!", 6001);
+            
+        }        
+        return array("statusCode" => 6000, "data" => $servers,"message" => 'success');
     }
     /**
      * @JSON
@@ -172,16 +173,14 @@ class Api
     public function appLogin() {
         $port = $_POST['port'];
         $password = $_POST['password'];
-        
-        if (!empty($port) && !empty($password)) {// isset then
-            $user = User::getUserByPort($port);
-            if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
-                return array("statusCode" => 0, "success"=>1, "msg" => 'success');
-            }
-            return array("statusCode" => 1, "success"=>0, "msg" => 'password incorrect');           
-        }else{//port psw empty
-            return array("statusCode" => 2, "success"=>0, "msg" => 'port or psw must not be empty!');
+        if (empty($port) || empty($password)) {
+            throw new ApiError('port or psw must not be empty!', 8002);
         }
-
+        $user = User::getUserByPort($port);
+        if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
+            return array("statusCode" => 8000, "data"=>'noOutput', "msg" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
+        }else{
+            throw new ApiError('password incorrect', 8001); 
+        }
     }    
 }
