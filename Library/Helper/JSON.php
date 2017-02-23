@@ -49,6 +49,7 @@ class JSON implements IFilter
                     'code' => $error->getCode() ? $error->getCode() : 9999,
                     'data' => null,
                     'message'  =>$context['message']
+                ));
             }
              else {
                 $this->outputJson(array(
