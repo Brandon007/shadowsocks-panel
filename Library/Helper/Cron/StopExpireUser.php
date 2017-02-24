@@ -110,7 +110,7 @@ class StopExpireUser implements ICron
         $data = array(
             "first"    => array("加速服务到期！", '#000000'),
             "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
-            "keyword2" => array(date('Y-m-d 00:00:00', $user->expireTime), "#FF0000"),
+            "keyword2" => array(date('Y-m-d H:i:s', $user->expireTime), "#FF0000"),
             "remark"   => array("欢迎再次购买！", "#5599FF"),
         );
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
@@ -124,7 +124,7 @@ class StopExpireUser implements ICron
         $data = array(
             "first"    => array("已用完免费额度20G,暂停使用", '#000000'),
             "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
-            "keyword2" => array(date('Y-m-d 00:00:00', $user->expireTime), "#FF0000"),
+            "keyword2" => array(date('Y-m-d H:i:s', $user->expireTime), "#FF0000"),
             "remark"   => array("如需继续使用,欢迎购买套餐", "#5599FF"),
         );
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
