@@ -12,6 +12,7 @@ use Core\Error;
 use Helper\Http;
 use Helper\Option;
 use Helper\Utils;
+use Helper\RedisManager;
 use Model\Card;
 use Model\Node;
 use Model\User;
@@ -172,14 +173,26 @@ class Api
     public function appLogin() {
         $port = $_POST['port'];
         $password = $_POST['password'];
+        $data = array();
         if (empty($port) || empty($password)) {
             throw new Error('port or psw must not be empty!', 8002);
         }
         $user = User::getUserByPort($port);
         if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
-            return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
+            $data[token] = $this->getToken($port);
+            // return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
+            return array("statusCode" => 8000, "output"=>$data, "message" => 'success');
         }else{
             throw new Error('password incorrect', 8001); 
         }
+    }
+
+    protected function getToken($port) {
+        $redis = RedisManager::getRedisConn();
+        $token = $redis->get($port);
+        if (!$token) {//token过期,重新生成,有效期为2小时
+            $redis->set($port,strtoupper(Utils::randomChar(16)), 7200);
+        }
+        return $redis->get($port);
     }    
 }
