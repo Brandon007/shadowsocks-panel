@@ -45,7 +45,7 @@ class RedisManager
             // $redis_ocean = new Redis();
             // $redis_ocean->connect(G::$conf['redis-host'], G::$conf['redis-port']);
             // $redis_ocean->auth(G::$conf['redis-pass']);
-            $redis_ocean = new Redis();
+            $redis_ocean = new \Redis();
             $redis_ocean->pconnect('127.0.0.1',6379);
 
 
