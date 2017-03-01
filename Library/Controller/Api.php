@@ -154,18 +154,24 @@ class Api
      * @JSON
      */
     public function nodes() {
-        $status = 0;
-        $nodes = null;
-        $servers = array();   
-        $nodes = Node::getNodeArray(0);//普通节点
-        foreach ($nodes as $node) {
-            $servers[] = $node->server;
-        }
-        if (empty($nodes)) {
-            throw new Error("get nodes list fail!", 6001);
-            
-        }        
-        return array("statusCode" => 6000, "output" => $servers,"message" => 'success');
+        $port = $_POST['port'];
+        $timestamp = $_POST['timestamp'];
+        $token = $_POST['token'];
+        $sign = $_POST['sign'];
+        if ($this->securityProcess($port,$timestamp,$token,$sign)) {//通过api安全检验
+            $nodes = null;
+            $servers = array();   
+            $nodes = Node::getNodeArray(0);//普通节点
+            foreach ($nodes as $node) {
+                $servers[] = $node->server;
+            }
+            if (empty($nodes)) {
+                throw new Error("get nodes list fail!", 6001);
+                
+            }
+            return array("statusCode" => 6000, "output" => $servers,"message" => 'success');  
+           }   
+        throw new Error("token incorrect", 7005);
     }
     /**
      * @JSON
@@ -187,6 +193,10 @@ class Api
         }
     }
 
+    /**
+    * 获取用户token
+    * @param $port 用户端口
+    */
     protected function getToken($port) {
         $redis = RedisManager::getRedisConn();
         $token = $redis->get($port);
@@ -194,5 +204,41 @@ class Api
             $redis->set($port,strtoupper(Utils::randomChar(16)), 7200);
         }
         return $redis->get($port);
-    }    
+    }
+
+    /**
+    * 验证token是否有效
+    * @param $port 用户端口
+    */
+    protected function checkToken($port,$token) {
+        $redis = RedisManager::getRedisConn();
+        $redisToken = $redis->get($port);
+        if ($redisToken && strcasecmp($redisToken, $token)) {//token存在且相等
+            return true;
+        }
+        return false;
+    }
+
+    /**
+    * api安全性校验
+    * @param $port 用户端口
+    * @param $timestamp 用户发起请求时间戳
+    * @param $token 用户token
+    * @param $sign 用户签名
+    */
+    protected function securityProcess($port,$timestamp,$token,$sign){
+        if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
+            throw new Error("param missing", 7001);
+        }
+        if (time() - $timestamp >30) {
+            throw new Error("invilid timestamp", 7002);
+        }
+        if (!$this->checkToken($port,$token)) {
+            throw new Error("token expired", 7003);
+        }
+        if (!strcasecmp($sign, strtoupper(md5($port . $timestamp . $token))  )) {//compare sign
+            throw new Error("sign incorrect", 7004);
+        }
+        return true;
+    }          
 }
