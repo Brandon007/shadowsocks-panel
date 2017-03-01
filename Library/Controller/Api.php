@@ -16,6 +16,7 @@ use Helper\RedisManager;
 use Model\Card;
 use Model\Node;
 use Model\User;
+use Helper\Logger;
 
 class Api
 {
@@ -213,6 +214,7 @@ class Api
     protected function checkToken($port,$token) {
         $redis = RedisManager::getRedisConn();
         $redisToken = $redis->get($port);
+        Logger::getInstance()->debug('redisToken ->'.$redisToken.'  token->' . $token);
         if ($redisToken && strcasecmp($redisToken, $token)) {//token存在且相等
             return true;
         }
@@ -230,7 +232,7 @@ class Api
         if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
             throw new Error("param missing", 7001);
         }
-        if (time() - $timestamp >30) {
+        if (abs(time() - $timestamp) >30) {
             throw new Error("invilid timestamp", 7002);
         }
         if (!$this->checkToken($port,$token)) {
