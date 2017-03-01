@@ -214,8 +214,7 @@ class Api
     protected function checkToken($port,$token) {
         $redis = RedisManager::getRedisConn();
         $redisToken = $redis->get($port);
-        Logger::getInstance()->debug('redisToken ->'.$redisToken.'  token->' . $token);
-        if (strcasecmp($redisToken, $token)) {//token存在且相等
+        if (strcmp($redisToken, $token)==0) {//token存在且相等
             return true;
         }
         return false;
@@ -238,7 +237,7 @@ class Api
         if (!$this->checkToken($port,$token)) {
             throw new Error("token expired", 7003);
         }
-        if (!strcasecmp($sign, strtoupper(md5($port . $timestamp . $token))  )) {//compare sign
+        if (strcmp($sign, strtoupper(md5($port . $timestamp . $token)))!=0 ) {//compare sign
             throw new Error("sign incorrect", 7004);
         }
         return true;
