@@ -215,7 +215,7 @@ class Api
         $redis = RedisManager::getRedisConn();
         $redisToken = $redis->get($port);
         Logger::getInstance()->debug('redisToken ->'.$redisToken.'  token->' . $token);
-        if ($redisToken && strcasecmp($redisToken, $token)) {//token存在且相等
+        if (strcasecmp($redisToken, $token)) {//token存在且相等
             return true;
         }
         return false;
