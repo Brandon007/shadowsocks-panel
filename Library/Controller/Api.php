@@ -202,7 +202,7 @@ class Api
         $redis = RedisManager::getRedisConn();
         $token = $redis->get($port);
         if (!$token) {//token过期,重新生成,有效期为2小时
-            $redis->set($port,strtoupper(Utils::randomChar(16)), 7200);
+            $redis->set($port,strtolower(Utils::randomChar(16)), 7200);
         }
         return $redis->get($port);
     }
@@ -237,7 +237,7 @@ class Api
         if (!$this->checkToken($port,$token)) {
             throw new Error("token expired", 7003);
         }
-        if (strcmp($sign, strtoupper(md5($port . $timestamp . $token)))!=0 ) {//compare sign
+        if (strcmp($sign, strtolower(md5($port . $timestamp . $token)))!=0 ) {//compare sign
             throw new Error("sign incorrect", 7004);
         }
         return true;
