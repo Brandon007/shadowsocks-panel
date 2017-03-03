@@ -122,10 +122,10 @@ class StopExpireUser implements ICron
         $templateId = 'OtmnvVvHqBH9eUCC5-KkXV-QPVNDWkgpArvOlUbco04';
         $url = 'https://wx.wukongss.com/order.php';
         $data = array(
-            "first"    => array("已用完免费额度20G,暂停使用", '#000000'),
+            "first"    => array("已用完免费流量" . Utils::flowAutoShow($user->transfer) . ",暂停使用", '#000000'),
             "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
             "keyword2" => array(date('Y-m-d H:i:s', $user->expireTime), "#FF0000"),
-            "remark"   => array("如需继续使用,欢迎购买套餐", "#5599FF"),
+            "remark"   => array("如需继续使用,欢迎购买套餐,不限流量", "#5599FF"),
         );
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
         var_dump($result);        
