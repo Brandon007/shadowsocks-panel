@@ -111,7 +111,7 @@ class StopExpireUser implements ICron
             "first"    => array("加速服务到期！", '#000000'),
             "keyword1" => array(Utils::planAutoShow($user->plan), "#FF0000"),
             "keyword2" => array(date('Y-m-d H:i:s', $user->expireTime), "#FF0000"),
-            "remark"   => array("欢迎再次购买！", "#5599FF"),
+            "remark"   => array("欢迎再次购买(每天签到还能继续使用噢)", "#5599FF"),
         );
         $result = $app->notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
         var_dump($result);        
