@@ -50,7 +50,7 @@ class User
             $where .= " AND email like '%{$email}%' ";
         }
         if($openid) {
-            $where .= " AND openid={$openid} ";
+            $where .= " AND openid='{$openid}' ";
         }        
         $pageData = new PageData('member', " {$where} ORDER BY uid",
             ['uid', 'port', 'email', 'nickname', 'plan', 'flow_up', 'flow_down', 'transfer', 'expireTime', 'openid']);
