@@ -103,9 +103,10 @@ class Stats
     public static function countMoney()
     {
         $querySQL = "select sum(money) from `member` ";
+        $querySQL = "select sum(money) from `wxorder` where money>5";
         $stn = DB::getInstance()->prepare($querySQL);
         $stn->execute();
-        return $stn->fetch(DB::FETCH_NUM)[0];
+        return ($stn->fetch(DB::FETCH_NUM)[0])/100;
     }
 
 
