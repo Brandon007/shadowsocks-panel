@@ -53,7 +53,7 @@ class User
             $where .= " AND openid={$openid} ";
         }        
         $pageData = new PageData('member', " {$where} ORDER BY uid",
-            ['uid', 'port', 'email', 'nickname', 'plan', 'flow_up', 'flow_down', 'transfer', 'expireTime']);
+            ['uid', 'port', 'email', 'nickname', 'plan', 'flow_up', 'flow_down', 'transfer', 'expireTime', 'openid']);
         $pageData->execute();
         Template::setContext($pageData->getContext());
     }
