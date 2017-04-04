@@ -9,7 +9,7 @@ class addInviteFrom extends AbstractMigration
     {
 
         $table = $this->table('member');
-        $table->addColumn('inviteFrom','string', ['limit' => 64]);
+        $table->addColumn('inviteFrom','string', ['limit' => 64,'null'=>true]);
         $table->update();
 
     }
