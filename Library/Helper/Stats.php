@@ -102,7 +102,7 @@ class Stats
      */
     public static function countMoney()
     {
-        $querySQL = "select sum(money) from `member` ";
+        // $querySQL = "select sum(money) from `member` ";
         $querySQL = "select sum(money) from `wxorder` where money>5";
         $stn = DB::getInstance()->prepare($querySQL);
         $stn->execute();
@@ -157,4 +157,28 @@ class Stats
         $count = $stn->fetch(DB::FETCH_NUM);
         return $count[0] != null ?: 0;
     }
+
+    /**
+     * 统计某人的邀请总数
+     *
+     * @param string $openid
+     * @return int
+     */
+    public static function getTotalInvite($openid){
+        $stn = DB::getInstance()->prepare("SELECT count(1) FROM `member` WHERE inviteFrom ='{$openid}'");
+        $stn->execute();
+        return $stn->fetch(DB::FETCH_NUM)[0];        
+    }
+
+    /**
+     * 统计某人的有效邀请总数
+     *
+     * @param string $openid
+     * @return int
+     */
+    public static function getValidInvite($openid){
+        $stn = DB::getInstance()->prepare("SELECT count(1) FROM `member` WHERE inviteFrom ='{$openid}' AND flow_down > " . (Utils::MB * 200));
+        $stn->execute();
+        return $stn->fetch(DB::FETCH_NUM)[0];        
+    }    
 }

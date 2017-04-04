@@ -42,6 +42,7 @@ class User extends Model
     public $subscribe = 0;//是否关注微信 0取关 1关注
     public $money = 0;//狗屁用都没的 $
     public $invite = '';//注册所用的邀请码
+    public $inviteFrom = '';//记录是谁邀请的
     public $coupon;//优惠码
     public $credit =0;//积分
     public $invite_num = 0;//用户拥有的邀请码
