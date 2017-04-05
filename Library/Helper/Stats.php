@@ -177,7 +177,7 @@ class Stats
      * @return int
      */
     public static function getValidInvite($openid){
-        $stn = DB::getInstance()->prepare("SELECT count(1) FROM `member` WHERE inviteFrom ='{$openid}' AND enable=1 AND flow_down > " . (Utils::MB * 200));
+        $stn = DB::getInstance()->prepare("SELECT count(1) FROM `member` WHERE inviteFrom ='{$openid}' AND enable=1 AND flow_down > " . (Utils::MB * 100));
         $stn->execute();
         return $stn->fetch(DB::FETCH_NUM)[0];        
     }    
