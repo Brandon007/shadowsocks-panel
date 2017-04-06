@@ -55,7 +55,7 @@ class JSON implements IFilter
 
     private function outputJson($jsonData)
     {
-        header('Content-type: application/json');
+        header('Content-type: application/json;charset=utf-8');
         if ($this->allowCallback) {
             $callback = $_POST['callback'] ? $_POST['callback'] : $_GET['callback'];
             if (preg_match('/[A-Za-z_0-9]+/', $callback)) {
