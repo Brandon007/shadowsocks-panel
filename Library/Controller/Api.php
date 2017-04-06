@@ -189,6 +189,7 @@ class Api
             $flow_down = Utils::flowAutoShow($user->flow_down);
             $transfer = Utils::flowAutoShow($user->transfer);
             $data['token'] = $this->getToken($port);
+            $data['plan'] = Utils::planAutoShow($user->plan);
             $data['transfer'] = $transfer;
             $data['flow_down'] = $flow_down;
             $data['encryption'] = $user->method==null?'salsa20':$user->method;
