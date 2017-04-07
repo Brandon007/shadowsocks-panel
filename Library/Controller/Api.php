@@ -15,6 +15,7 @@ use Helper\Utils;
 use Helper\RedisManager;
 use Model\Card;
 use Model\Node;
+use Model\NodeVO;
 use Model\User;
 use Helper\Logger;
 
@@ -164,7 +165,12 @@ class Api
             $servers = array();   
             $nodes = Node::getNodeArray(0);//普通节点
             foreach ($nodes as $node) {
-                $servers[] = $node;
+                $VO = new NodeVO();
+                $VO->id = $node->id;
+                $VO->name = $node->name;
+                $VO->server = $node->server;
+                $VO->remake = $node->info;
+                $servers[] = $VO;
             }
             if (empty($nodes)) {
                 throw new Error("get nodes list fail!", 6001);
