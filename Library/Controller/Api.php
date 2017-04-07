@@ -164,7 +164,7 @@ class Api
             $servers = array();   
             $nodes = Node::getNodeArray(0);//普通节点
             foreach ($nodes as $node) {
-                $servers[] = $node->server;
+                $servers[] = $node;
             }
             if (empty($nodes)) {
                 throw new Error("get nodes list fail!", 6001);
