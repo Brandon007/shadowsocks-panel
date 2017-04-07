@@ -250,6 +250,8 @@ class Api
             throw new Error("token expired", 7003);
         }
         if (strcmp($sign, strtolower(md5($timestamp . $token)))!=0 ) {//compare sign
+            Logger::getInstance()->info('received sign:' . $sign);
+            Logger::getInstance()->info('local sign:' . strtolower(md5($timestamp . $token)));   
             throw new Error("sign incorrect", 7004);
         }
         return true;
