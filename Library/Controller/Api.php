@@ -229,6 +229,9 @@ class Api
     protected function checkToken($port,$token) {
         $redis = RedisManager::getRedisConn();
         $redisToken = $redis->get($port);
+        Logger::getInstance()->info('received token:' . $token);
+        Logger::getInstance()->info('redis token:' . $redisToken);
+
         if (strcmp($redisToken, $token)==0) {//token存在且相等
             return true;
         }
