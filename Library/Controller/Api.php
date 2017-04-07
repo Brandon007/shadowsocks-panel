@@ -169,7 +169,7 @@ class Api
                 $VO->id = $node->id;
                 $VO->name = $node->name;
                 $VO->server = $node->server;
-                $VO->remake = $node->info;
+                $VO->remarke = $node->info;
                 $servers[] = $VO;
             }
             if (empty($nodes)) {
