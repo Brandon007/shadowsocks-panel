@@ -431,6 +431,7 @@ class Utils
 
     public static function encrypt($data, $key)  
     {  
+        $str    =   '';
         $key    =   md5($key);  
         $x      =   0;  
         $len    =   strlen($data);  
@@ -453,11 +454,12 @@ class Utils
 
     public static function decrypt($data, $key)  
     {  
-        $key = md5($key);  
-        $x = 0;  
-        $data = base64_decode($data);  
-        $len = strlen($data);  
-        $l = strlen($key);  
+        $str    =   '';
+        $key    = md5($key);  
+        $x      = 0;  
+        $data   = base64_decode($data);  
+        $len    = strlen($data);  
+        $l      = strlen($key);  
         for ($i = 0; $i < $len; $i++)  
         {  
             if ($x == $l)   
