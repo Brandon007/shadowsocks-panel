@@ -159,7 +159,7 @@ class Api
         $timestamp = $_POST['timestamp'];
         $token = $_POST['token'];
         $sign = $_POST['sign'];
-        if ($this->securityProcess($port,$timestamp,$token,$sign)) {//通过api安全检验
+        if ($this->securityProcess($timestamp,$token,$sign)) {//通过api安全检验
             $nodes = null;
             $servers = array();   
             $nodes = Node::getNodeArray(0);//普通节点
