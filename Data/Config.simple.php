@@ -58,6 +58,11 @@ define('DEBUG_ENABLE', false);
 define('LOG_LEVEL', 4);
 
 /**
+ * API KEY:
+ */
+define('ENCRYPT_API_KEY', 'This is API_KEY');
+
+/**
  * Base URL:
  * To manually config this, uncomment the following line and change the URL
  * To use auto detect, keep this commented

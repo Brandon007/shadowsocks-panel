@@ -210,7 +210,8 @@ class Api
         $redis = RedisManager::getRedisConn();
         $token = $redis->get($port);
         if (!$token) {//token过期,重新生成,有效期为2小时
-            $redis->set($port,strtolower(Utils::randomChar(16)), 7200);
+            $encryptedToken = Utils::encrypt(strtolower(Utils::randomChar(16) . '_' . $port),ENCRYPT_API_KEY);
+            $redis->set($port, $encryptedToken, 7200);
         }
         return $redis->get($port);
     }
@@ -230,22 +231,23 @@ class Api
 
     /**
     * api安全性校验
-    * @param $port 用户端口
     * @param $timestamp 用户发起请求时间戳
     * @param $token 用户token
     * @param $sign 用户签名
     */
-    protected function securityProcess($port,$timestamp,$token,$sign){
+    protected function securityProcess($timestamp,$token,$sign){
         if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
             throw new Error("param missing", 7001);
         }
         if (abs(time() - $timestamp) >30) {
             throw new Error("invilid timestamp", 7002);
         }
+        $decryptedToken = Utils::decrypt($token,ENCRYPT_API_KEY);
+        $port = explode('_', $decryptedToken)[1];
         if (!$this->checkToken($port,$token)) {
             throw new Error("token expired", 7003);
         }
-        if (strcmp($sign, strtolower(md5($port . $timestamp . $token)))!=0 ) {//compare sign
+        if (strcmp($sign, strtolower(md5($timestamp . $token)))!=0 ) {//compare sign
             throw new Error("sign incorrect", 7004);
         }
         return true;
