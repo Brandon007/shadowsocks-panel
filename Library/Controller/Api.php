@@ -159,6 +159,7 @@ class Api
         $port = $_POST['port'];
         $timestamp = $_POST['timestamp'];
         $token = $_POST['token'];
+        $token = str_replace(' ', '+', $token);////替换空格为加号
         $sign = $_POST['sign'];
         if ($this->securityProcess($timestamp,$token,$sign)) {//通过api安全检验
             $nodes = null;
