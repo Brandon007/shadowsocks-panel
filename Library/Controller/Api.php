@@ -244,6 +244,8 @@ class Api
         }
         $decryptedToken = Utils::decrypt($token,ENCRYPT_API_KEY);
         $port = explode('_', $decryptedToken)[1];
+        Logger::getInstance()->info('decryptedToken:' . $decryptedToken);
+        Logger::getInstance()->info('port:' . $port);
         if (!$this->checkToken($port,$token)) {
             throw new Error("token expired", 7003);
         }
