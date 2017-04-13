@@ -249,7 +249,7 @@ class Api
         if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
             throw new Error("param missing", 7001);
         }
-        if (abs(time() - $timestamp) >30) {
+        if (abs(time() - $timestamp) >600) {
             throw new Error("invilid timestamp", 7002);
         }
         $token = urldecode($token);
