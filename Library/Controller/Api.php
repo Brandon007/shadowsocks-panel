@@ -246,6 +246,7 @@ class Api
     * @param $sign 用户签名
     */
     protected function securityProcess($timestamp,$token,$sign){
+        $sign = urldecode($sign);
         if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
             throw new Error("param missing", 7001);
         }
