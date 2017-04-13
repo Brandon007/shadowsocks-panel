@@ -246,14 +246,18 @@ class Api
     * @param $sign 用户签名
     */
     protected function securityProcess($timestamp,$token,$sign){
+        Logger::getInstance()->info('before sign urlencode :' . $sign);
         $sign = urldecode($sign);
+        Logger::getInstance()->info('after sign urlencode :' . $sign);
         if (empty($timestamp) || empty($token) || empty($sign)) {//missing param
             throw new Error("param missing", 7001);
         }
         if (abs(time() - $timestamp) >600) {
             throw new Error("invilid timestamp", 7002);
         }
+        Logger::getInstance()->info('before token urlencode :' . $token);
         $token = urldecode($token);
+        Logger::getInstance()->info('after token urlencode :' . $token);
         $decryptedToken = Utils::decrypt($token,ENCRYPT_API_KEY);
         $port = explode('_', $decryptedToken)[1];
         Logger::getInstance()->info('decryptedToken:' . $decryptedToken);
