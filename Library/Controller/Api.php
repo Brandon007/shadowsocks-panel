@@ -252,6 +252,7 @@ class Api
         if (abs(time() - $timestamp) >30) {
             throw new Error("invilid timestamp", 7002);
         }
+        $token = urldecode($token);
         $decryptedToken = Utils::decrypt($token,ENCRYPT_API_KEY);
         $port = explode('_', $decryptedToken)[1];
         Logger::getInstance()->info('decryptedToken:' . $decryptedToken);
