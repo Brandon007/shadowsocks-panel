@@ -217,6 +217,9 @@ class Api
         $token = $redis->get($port);
         if (!$token) {//token过期,重新生成,有效期为2小时
             $encryptedToken = Utils::encrypt(strtolower(Utils::randomChar(16) . '_' . $port),ENCRYPT_API_KEY);
+            while (strpos($encryptedToken, '+')!==false) {//discard '+' 
+                $encryptedToken = Utils::encrypt(strtolower(Utils::randomChar(16) . '_' . $port),ENCRYPT_API_KEY);
+            }
             $redis->set($port, $encryptedToken, 7200);
         }
         return $redis->get($port);
