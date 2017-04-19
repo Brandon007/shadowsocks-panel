@@ -201,7 +201,7 @@ class Api
             $data['flow_left'] = Utils::flowAutoShow($user->transfer - $user->flow_down);
             $data['encryption'] = $user->method==null?'salsa20':$user->method;
             $data['expire_time'] = $user->expireTime;
-            $data['status'] = $user->enable;
+            $data['status'] = intval($user->enable);
             // return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
             return array("statusCode" => 8000, "output"=>$data, "message" => 'success');
         }else{
