@@ -257,7 +257,7 @@ class Api
         }
         if (abs(time() - $timestamp) >600) {
             Logger::getInstance()->info('now:' . time());
-            Logger::getInstance()->info('received timestamp:' . timestamp());
+            Logger::getInstance()->info('received timestamp:' . $timestamp());
             throw new Error("invilid timestamp", 7002);
         }
         Logger::getInstance()->info('before token urldecode :' . $token);
