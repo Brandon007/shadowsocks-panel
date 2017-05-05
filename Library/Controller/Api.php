@@ -276,5 +276,18 @@ class Api
             throw new Error("sign incorrect", 7004);
         }
         return true;
+    }
+
+    /**
+    * @JSON
+    */
+    protected function getVersion($appName){
+        $appName = $_POST['appName'];
+        if (is_null($appName)) {
+            throw new Error("appName must not be empty!", 7005);
+        }
+        $data = array();
+        $data['version'] = Option::get($appName);
+    throw new Error("not finish yet!", 7004);
     }          
 }
