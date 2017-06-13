@@ -191,6 +191,11 @@ class Api
             throw new Error('port or psw must not be empty!', 8002);
         }
         $user = User::getUserByPort($port);
+        if ($user) {
+            Logger::getInstance()->info('received password:' . $password);
+            Logger::getInstance()->info('local password:' . md5($user->sspwd));            
+        }
+
         if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
             $flow_down = Utils::flowAutoShow($user->flow_down);
             $transfer = Utils::flowAutoShow($user->transfer);
