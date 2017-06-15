@@ -96,6 +96,21 @@ class Utils
         }
         return $char;
     }
+    /**
+     * 获取随机数字
+     * @param int $length
+     * @return string
+     */
+    public static function randomNum($length = 6)
+    {
+        // 密码字符集，可任意添加你需要的字符
+        $chars = '0123456789';
+        $char = '';
+        for ($i = 0; $i < $length; $i++) {
+            $char .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        return $char;
+    }       
 
     /**
      * 获取客户端IP地址
