@@ -308,6 +308,7 @@
                 }
             },
             submitHandler: function(form) {
+                var innerChangeTable = changeTable;
                 $.ajax({
                     url: form.action,
                     method: "POST",
@@ -319,7 +320,7 @@
                             return;
                         }
                         if(result.data.error == 0) {
-                            changeTable(result.data.user);
+                            innerChangeTable(result.data.user);
                         }
                         showToastr(result.data.message, 0);
                         jQuery('#modal-6').modal('hide');
