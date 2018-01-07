@@ -196,21 +196,24 @@ class Api
             Logger::getInstance()->info('local password:' . md5($user->sspwd));            
         }
 
-        if ($user && strcmp($password, md5($user->sspwd))==0 ) {//exist & equal
-            $flow_down = Utils::flowAutoShow($user->flow_down);
-            $transfer = Utils::flowAutoShow($user->transfer);
-            $data['token'] = $this->getToken($port);
-            $data['plan'] = $user->plan;
-            $data['transfer'] = $transfer;
-            $data['flow_down'] = $flow_down;
-            $data['flow_left'] = Utils::flowAutoShow($user->transfer - $user->flow_down);
-            $data['encryption'] = $user->method==null?'salsa20':$user->method;
-            $data['expire_time'] = $user->expireTime;
-            $data['status'] = intval($user->enable);
-            // return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
-            return array("statusCode" => 8000, "output"=>$data, "message" => 'success');
+        if ($user) {//exist
+            if (strcmp($password, md5($user->sspwd))==0 || strcmp($password, $user->sspwd)==0) {
+                $flow_down = Utils::flowAutoShow($user->flow_down);
+                $transfer = Utils::flowAutoShow($user->transfer);
+                $data['token'] = $this->getToken($port);
+                $data['plan'] = $user->plan;
+                $data['transfer'] = $transfer;
+                $data['flow_down'] = $flow_down;
+                $data['flow_left'] = Utils::flowAutoShow($user->transfer - $user->flow_down);
+                $data['encryption'] = $user->method==null?'salsa20':$user->method;
+                $data['expire_time'] = $user->expireTime;
+                $data['status'] = intval($user->enable);
+                // return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
+                return array("statusCode" => 8000, "output"=>$data, "message" => 'success');
+            }
+            throw new Error('password incorrect', 8001);
         }else{
-            throw new Error('password incorrect', 8001); 
+            throw new Error('user not exists', 8003); 
         }
     }
 
