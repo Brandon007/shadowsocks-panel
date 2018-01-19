@@ -193,11 +193,12 @@ class Api
         $user = User::getUserByPort($port);
         if ($user) {
             Logger::getInstance()->info('received password:' . $password);
-            Logger::getInstance()->info('local password:' . md5($user->sspwd));            
+            Logger::getInstance()->info('local MD5 password:' . md5($user->sspwd));            
+            Logger::getInstance()->info('local sha1 password:' . sha1($user->sspwd));
         }
 
         if ($user) {//exist
-            if (strcmp($password, md5($user->sspwd))==0 || strcmp($password, $user->sspwd)==0) {
+            if (strcmp($password, md5($user->sspwd))==0 || strcmp($password, $user->sspwd)==0 ||strcmp($password, sha1($user->sspwd))==0) {
                 $flow_down = Utils::flowAutoShow($user->flow_down);
                 $transfer = Utils::flowAutoShow($user->transfer);
                 $data['token'] = $this->getToken($port);
@@ -279,6 +280,9 @@ class Api
             throw new Error("token expired", 7003);
         }
         if (strcmp($sign, strtolower(md5($timestamp . $token)))!=0 ) {//compare sign
+            if (strcmp($sign, strtolower(sha1($timestamp . $token)))==0){
+                return true;
+            }
             Logger::getInstance()->info('received sign:' . $sign);
             Logger::getInstance()->info('local sign:' . strtolower(md5($timestamp . $token)));   
             throw new Error("sign incorrect", 7004);
