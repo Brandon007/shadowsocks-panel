@@ -206,7 +206,7 @@ class Api
                 $data['transfer'] = $transfer;
                 $data['flow_down'] = $flow_down;
                 $data['flow_left'] = Utils::flowAutoShow($user->transfer - $user->flow_down);
-                $data['encryption'] = $user->method==null?'salsa20':$user->method;
+                $data['encryption'] = $user->method==null?'aes-256-cfb':$user->method;
                 $data['expire_time'] = $user->expireTime;
                 $data['status'] = intval($user->enable);
                 // return array("statusCode" => 8000, "output"=>'noOutput', "message" => 'success');////为兼容,data无输出时候,不能用null判断,固定noOutput
